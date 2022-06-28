@@ -180,6 +180,17 @@ button {
   border: none;
   box-shadow: 0px 0px 3px gray;
 }
+#deleteEventModal div{
+margin-top: 10px;
+margin-bottom: 10px;
+}
+
+#eventStart, #eventEnd{
+display: inline-block;
+font-weight: bolder;
+margin-right: 20px;
+}
+
 #eventTitleInput.error {
   border: 2px solid red;
 }
@@ -190,7 +201,9 @@ button {
   background-color: #92a1d1;
 }
 #eventText {
-  font-size: 14px;
+  font-size: 2rem;
+  font-weight: bolder;
+  font-style: normal;
 }
 #modalBackDrop {
   display: none;

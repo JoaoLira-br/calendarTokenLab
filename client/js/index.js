@@ -31,6 +31,7 @@ const cancelButton = document.getElementById('cancelButton');
 
 //popup que abre quando se clica em um dia com um evento ja existente
 const deleteEventModal = document.getElementById('deleteEventModal');
+
 const deleteButton = document.getElementById('deleteButton');
 const closeButton = document.getElementById('closeButton');
 const editButton = document.getElementById('editButton');
@@ -40,8 +41,11 @@ function openModal(date){
     clicado = date;
     const eventsForDay = eventos.find(e => e.date === clicado);
     if(eventsForDay){
-        document.getElementById('eventText').innerText = eventos.title;
-        deleteEventModal.style.display = 'block';
+       deleteEventModal.style.display = 'block';
+       document.getElementById('eventText').innerText = eventsForDay.title;
+       document.getElementById('eventDescription').innerText = eventsForDay.description;
+       document.getElementById('eventStart').innerText = eventsForDay.start;
+       document.getElementById('eventEnd').innerText = eventsForDay.end;
     }else{
         newEventModal.style.display = 'block';
     }
@@ -72,6 +76,10 @@ function saveEvent(){
         });
         
         localStorage.setItem('eventos', JSON.stringify(eventos));
+        eventTitleInput.value = '';
+        eventDescriptionInput.value = '';
+        eventoFim.value = '';
+        eventoInicio.value = '';
         closeModal();
     }else{
         eventTitleInput.classList.add('error');
@@ -81,7 +89,7 @@ function saveEvent(){
 function deleteEvent(){
     eventos = eventos.filter(e => e.date !== clicado);
     localStorage.setItem('eventos', JSON.stringify(eventos));
-    
+
     closeModal();
 }
 
