@@ -14,7 +14,7 @@
     </header>
     <main>
         <!-- todo:modals vao servir como popups para adicionar eventos no calendario -->
-        <div id="container">
+        <div class="wrapper">
             <div id="header">
                 <div id="mesAtual"></div>
                 <div>
@@ -36,10 +36,10 @@
             </div>
             <div id="calendario"></div>
         </div>
-        <div id="newEventModal">
+        <div id="modalNovoEvento">
             <h2>Novo Evento</h2>
-            <input type="text" name="eventTitleInput" placeholder="Titulo do Evento" id="eventTitleInput">
-           <textarea name="eventDescriptionInput" cols="20" rows="5" placeholder="Descrição do Evento" id="eventDescriptionInput"></textarea>
+            <input type="text" name="inputEventoTitulo" placeholder="Titulo do Evento" id="inputEventoTitulo">
+           <textarea name="inputEventoDescricao" cols="20" rows="5" placeholder="Descrição do Evento" id="inputEventoDescricao"></textarea>
            <div class="div-tempo">
             <span>De: </span>&nbsp;
             <input type="time" name="InicioEvento" id="input-eventoInicio">&nbsp;
@@ -47,23 +47,23 @@
             <input type="time" name="FimEvento" id="input-eventoFim">
           </div>
            
-            <button id="saveButton">Salvar</button>
-            <button id="cancelButton">Cancelar</button>
+            <button id="buttonSalvar">Salvar</button>
+            <button id="buttonCancelar">Cancelar</button>
           </div>
-        <div id="deleteEventModal">
+        <div id="modalDeletarEvento">
             <h2>Evento</h2>
-            <p id="eventText"></p>
-            <p id="eventDescription"></p>
+            <p id="eventoTitulo"></p>
+            <p id="eventoDescricao"></p>
             <div class="div-tempo">
                 <span>De: </span>
-                <p id="eventStart"></p>&nbsp;
+                <p id="eventoComeco"></p>&nbsp;
                 <span>Até: </span>
-                <p id="eventEnd"></p>
+                <p id="eventoFim"></p>
               </div>
               <div>
-                <button id="deleteButton">Delete</button>
-            <button id="closeButton">Close</button>
-            <button id="editButton">Edit</button>
+                <button id="buttonDeletar">Deletar</button>
+            <button id="buttonFechar">Fechar</button>
+            <button id="buttonEditar">Editar</button>
               </div>
             
         </div>

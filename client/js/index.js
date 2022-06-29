@@ -17,80 +17,80 @@ const buttonProximo = document.getElementById('buttonProximo');
 const buttonVoltar = document.getElementById('buttonVoltar');
 
 //modal e a janela de popup quando o user clica em algum dos blocos
-const newEventModal = document.getElementById('newEventModal');
+const modalNovoEvento = document.getElementById('modalNovoEvento');
 //backdrop e o sombreamento atras do popup 'modal'
 const backDrop = document.getElementById('modalBackDrop');
-//eventTitleInput e o input de texto do popup
-const eventTitleInput = document.getElementById('eventTitleInput');
-const eventDescriptionInput = document.getElementById('eventDescriptionInput');
+//inputEventoTitulo e o input de texto do popup
+const inputEventoTitulo = document.getElementById('inputEventoTitulo');
+const inputEventoDescricao = document.getElementById('inputEventoDescricao');
 const eventoInicio = document.getElementById('input-eventoInicio');
 const eventoFim = document.getElementById('input-eventoFim');
 
-const saveButton = document.getElementById('saveButton');
-const cancelButton = document.getElementById('cancelButton');
+const buttonSalvar = document.getElementById('buttonSalvar');
+const buttonCancelar = document.getElementById('buttonCancelar');
 
 //popup que abre quando se clica em um dia com um evento ja existente
-const deleteEventModal = document.getElementById('deleteEventModal');
+const modalDeletarEvento = document.getElementById('modalDeletarEvento');
 
-const deleteButton = document.getElementById('deleteButton');
-const closeButton = document.getElementById('closeButton');
-const editButton = document.getElementById('editButton');
+const buttonDeletar = document.getElementById('buttonDeletar');
+const buttonFechar = document.getElementById('buttonFechar');
+const buttonEditar = document.getElementById('buttonEditar');
 
 //essa funcao abre um popup na tela quando o user clicar em dos blocos de dia do calendario
-function openModal(date){
+function abrirModal(date){
     clicado = date;
-    const eventsForDay = eventos.find(e => e.date === clicado);
-    if(eventsForDay){
-       deleteEventModal.style.display = 'block';
-       document.getElementById('eventText').innerText = eventsForDay.title;
-       document.getElementById('eventDescription').innerText = eventsForDay.description;
-       document.getElementById('eventStart').innerText = eventsForDay.start;
-       document.getElementById('eventEnd').innerText = eventsForDay.end;
+    const eventosDoDia = eventos.find(e => e.date === clicado);
+    if(eventosDoDia){
+       modalDeletarEvento.style.display = 'block';
+       document.getElementById('eventoTitulo').innerText = eventosDoDia.title;
+       document.getElementById('eventoDescricao').innerText = eventosDoDia.description;
+       document.getElementById('eventoComeco').innerText = eventosDoDia.start;
+       document.getElementById('eventoFim').innerText = eventosDoDia.end;
     }else{
-        newEventModal.style.display = 'block';
+        modalNovoEvento.style.display = 'block';
     }
 backDrop.style.display = 'block';
 }
 
 // essa funcao fecha todos os popups que estao na tela 
-function closeModal(){
-    eventTitleInput.classList.remove('error');
-    newEventModal.style.display = 'none';
+function fecharModal(){
+    inputEventoTitulo.classList.remove('error');
+    modalNovoEvento.style.display = 'none';
     backDrop.style.display = 'none';
-    deleteEventModal.style.display = 'none';
-    eventTitleInput.value = '';
+    modalDeletarEvento.style.display = 'none';
+    inputEventoTitulo.value = '';
     clicado = null;
     load();
 }
 //essa funcao serve para salvar os eventos que eu criar um dia
-function saveEvent(){
-    if(eventTitleInput.value){
-        eventTitleInput.classList.remove('error');
+function salvarEvento(){
+    if(inputEventoTitulo.value){
+        inputEventoTitulo.classList.remove('error');
         eventos.push({
             date: clicado,
-            title: eventTitleInput.value,
-            description: eventDescriptionInput.value,
+            title: inputEventoTitulo.value,
+            description: inputEventoDescricao.value,
             start: eventoInicio.value,
             end:eventoFim.value
             
         });
         
         localStorage.setItem('eventos', JSON.stringify(eventos));
-        eventTitleInput.value = '';
-        eventDescriptionInput.value = '';
+        inputEventoTitulo.value = '';
+        inputEventoDescricao.value = '';
         eventoFim.value = '';
         eventoInicio.value = '';
-        closeModal();
+        fecharModal();
     }else{
-        eventTitleInput.classList.add('error');
+        inputEventoTitulo.classList.add('error');
     }  
 }
 
-function deleteEvent(){
+function deletarEvento(){
     eventos = eventos.filter(e => e.date !== clicado);
     localStorage.setItem('eventos', JSON.stringify(eventos));
 
-    closeModal();
+    fecharModal();
 }
 
 
@@ -144,18 +144,18 @@ function load() {
             
             if(i > diasDePreenchimento){
                 blocoDeDia.classList.add('div-dia');
-                blocoDeDia.addEventListener('click', () => openModal(`${mes}/${i - diasDePreenchimento}/${ano}`));
+                blocoDeDia.addEventListener('click', () => abrirModal(`${mes}/${i - diasDePreenchimento}/${ano}`));
                 blocoDeDia.innerText = i - diasDePreenchimento;
                 const diaString = `${mes}/${i - diasDePreenchimento}/${ano}`;
-                const eventsForDay = eventos.find(e => e.date === diaString);
+                const eventosDoDia = eventos.find(e => e.date === diaString);
 
                 if(i - diasDePreenchimento === dia && nav === 0){
                     blocoDeDia.id = 'diaAtual';
                 }
-                if(eventsForDay){
+                if(eventosDoDia){
                     const eventDiv = document.createElement('div');
                     eventDiv.classList.add('eventos');
-                    eventDiv.innerText = eventsForDay.title;
+                    eventDiv.innerText = eventosDoDia.title;
                     blocoDeDia.appendChild(eventDiv);
                 }
                 
@@ -179,11 +179,11 @@ function load() {
         });
 
 
-         cancelButton.addEventListener('click', () => closeModal());
-         saveButton.addEventListener('click', () => saveEvent());
-         deleteButton.addEventListener('click', () => deleteEvent());
-         closeButton.addEventListener('click', () => closeModal());
-         editButton.addEventListener('click', () => editEvent());
+         buttonCancelar.addEventListener('click', () => fecharModal());
+         buttonSalvar.addEventListener('click', () => salvarEvento());
+         buttonDeletar.addEventListener('click', () => deletarEvento());
+         buttonFechar.addEventListener('click', () => fecharModal());
+         buttonEditar.addEventListener('click', () => editEvent());
         
     }
 
