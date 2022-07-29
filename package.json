@@ -1,0 +1,28 @@
+{
+  "name": "calendartokenlab",
+  "version": "1.0.0",
+  "description": "<p><em>CalendarTokenLab</em> é website planejador de eventos, no qual é Possível adicionar eventos a um calendario, junto com o respectivo Título, Descrição, e Horário de Duração. Está em progresso ainda...</p>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lira-1310/calendarTokenLab.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lira-1310/calendarTokenLab/issues"
+  },
+  "homepage": "https://github.com/Lira-1310/calendarTokenLab#readme",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "hbs": "^4.2.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.19"
+  }
+}

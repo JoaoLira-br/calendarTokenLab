@@ -1,76 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calendario de Eventos</title>
-    <link rel="stylesheet" href="./../css/styles.css">
-    
-</head>
-<body id="body-calendario">
-    <header>
-     
-    </header>
+    <link rel="stylesheet" href="./../css/styles.css" />
+  </head>
+  <body id="body-calendario">
+    <header></header>
     <main>
-        <!-- todo:modals vao servir como popups para adicionar eventos no calendario -->
-        <div class="wrapper">
-            <div id="header">
-                <div id="mesAtual"></div>
-                <div>
-                    <button id="buttonVoltar">Voltar</button>
-                    <button id="buttonProximo">Proximo</button>
-                </div>
-                
-            </div>
-            
-            <div id="semana">
-                <div class="dias-da-semana">Domingo</div>
-                <div class="dias-da-semana">Segunda-feira</div>
-                <!-- nota formatar nome terca feira -->
-                <div class="dias-da-semana">Terça-feira</div>
-                <div class="dias-da-semana">Quarta-feira</div>
-                <div class="dias-da-semana">Quinta-feira</div>
-                <div class="dias-da-semana">Sexta-feira</div>
-                <div class="dias-da-semana">Sábado</div>
-            </div>
-            <div id="calendario"></div>
-        </div>
-        <div id="modalNovoEvento">
-            <h2>Novo Evento</h2>
-            <input type="text" name="inputEventoTitulo" placeholder="Titulo do Evento" id="inputEventoTitulo">
-           <textarea name="inputEventoDescricao" cols="20" rows="5" placeholder="Descrição do Evento" id="inputEventoDescricao"></textarea>
-           <div class="div-tempo">
-            <span>De: </span>&nbsp;
-            <input type="time" name="InicioEvento" id="input-eventoInicio">&nbsp;
-            <span>Até: </span>
-            <input type="time" name="FimEvento" id="input-eventoFim">
+      <!-- todo:modals vao servir como popups para adicionar eventos no calendario -->
+      <div class="wrapper">
+        <div id="header">
+          <div id="mesAtual"></div>
+          <div>
+            <button id="buttonVoltar">Voltar</button>
+            <button id="buttonProximo">Proximo</button>
           </div>
-           
-            <button id="buttonSalvar">Salvar</button>
-            <button id="buttonCancelar">Cancelar</button>
-          </div>
-        <div id="modalDeletarEvento">
-            <h2>Evento</h2>
-            <p id="eventoTitulo"></p>
-            <p id="eventoDescricao"></p>
-            <div class="div-tempo">
-                <span>De: </span>
-                <p id="eventoComeco"></p>&nbsp;
-                <span>Até: </span>
-                <p id="eventoFim"></p>
-              </div>
-              <div>
-                <button id="buttonDeletar">Deletar</button>
-            <button id="buttonFechar">Fechar</button>
-            <button id="buttonEditar">Editar</button>
-              </div>
-            
         </div>
-        <div id="modalBackDrop">
+
+        <div id="semana">
+          <div class="dias-da-semana">Domingo</div>
+          <div class="dias-da-semana">Segunda-feira</div>
+          <!-- nota formatar nome terca feira -->
+          <div class="dias-da-semana">Terça-feira</div>
+          <div class="dias-da-semana">Quarta-feira</div>
+          <div class="dias-da-semana">Quinta-feira</div>
+          <div class="dias-da-semana">Sexta-feira</div>
+          <div class="dias-da-semana">Sábado</div>
         </div>
+        <div id="calendario"></div>
+      </div>
+      <div id="modalNovoEvento">
+        <h2>Novo Evento</h2>
+        <input
+          type="text"
+          name="inputEventoTitulo"
+          placeholder="Titulo do Evento"
+          id="inputEventoTitulo"
+        />
+        <textarea
+          name="inputEventoDescricao"
+          cols="20"
+          rows="5"
+          placeholder="Descrição do Evento"
+          id="inputEventoDescricao"
+        ></textarea>
+        <div class="div-tempo">
+          <span>De: </span>&nbsp;
+          <input
+            type="time"
+            name="InicioEvento"
+            id="input-eventoInicio"
+          />&nbsp;
+          <span>Até: </span>
+          <input type="time" name="FimEvento" id="input-eventoFim" />
+        </div>
+
+        <button id="buttonSalvar">Salvar</button>
+        <button id="buttonCancelar">Cancelar</button>
+      </div>
+      <div id="modalDeletarEvento">
+        <h2>Evento</h2>
+        <p id="eventoTitulo"></p>
+        <p id="eventoDescricao"></p>
+        <div class="div-tempo">
+          <span>De: </span>
+          <p id="eventoComeco"></p>
+          &nbsp;
+          <span>Até: </span>
+          <p id="eventoFim"></p>
+        </div>
+        <div>
+          <button id="buttonDeletar">Deletar</button>
+          <button id="buttonFechar">Fechar</button>
+          <button id="buttonEditar">Editar</button>
+        </div>
+      </div>
+      <div id="modalBackDrop"></div>
     </main>
-    <footer></footer>
+    <footer>
+      <a href="./signup.html">Signup</a>
+      <a href="./login.html">Login</a>
+    </footer>
     <script src="./../js/index.js"></script>
-</body>
+  </body>
 </html>

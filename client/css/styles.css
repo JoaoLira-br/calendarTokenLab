@@ -1,55 +1,82 @@
-#body-login .wrapper{
+#body-login .wrapper {
   justify-content: center;
   margin: auto;
- 
+
   text-align: center;
   padding: 100px 0;
 }
-.div-formLogin{
+.div-formLogin {
   padding: 50px 0;
-  
 }
-#body-login h1{
- color: #d36c6c; 
- font-family: sans-serif;
- font-size: 2.5em;
+.wrapper-signup {
+  display: flex;
+  flex-direction: column;
+  max-width: 80%;
+  min-width: 8;
+  min-width: 40%;
+  align-items: center;
+  gap: rem;
+  margin-top: 5rem;
 }
-input{
+
+.wrapper-signup div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  justify-content: space-evenly;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+form {
+  min-width: 20rem;
+  max-width: 30rem;
+  padding: 25px;
+  border: 1px solid;
+  border-color: #00000033;
+  border-radius: 1rem;
+  min-height: 50vh;
+}
+
+.wrapper-signup .div-submit {
+  /* margin-top: 10rem; */
+  /* justify-self: flex-start; */
+  /* align-self: flex-end; */
+  /* margin-top: auto; */
+  margin-top: 6rem;
+}
+
+button#btn-sign-up {
+  background-color: #92a1d1;
+}
+#body-login h1 {
+  color: #d36c6c;
+  font-family: sans-serif;
+  font-size: 2.5em;
+}
+h1 {
+  color: #d36c6c;
+}
+input {
   border-width: 0 0 1px 0;
   box-shadow: 0px 0px 2px gray;
   border: none;
   outline: none;
   padding: 5px;
   border-radius: 5px;
-  
 }
-.password{
+.password {
   margin-top: 1em;
 }
-#submit{
+#submit {
   margin-top: 1.5em;
   background-color: #92a1d1;
   border-width: 0 0 1px 0;
-   width: 75px;
-  cursor: pointer;
-  box-shadow: 0px 0px 2px gray;
-  border: none;
-  outline: none;
-  padding: 5px;
-  border-radius: 5px;
-  color: white;
-}
-
-
-
-
-#body-calendario {
-  display: flex;
-  margin-top: 50px;
-  justify-content: center;
-  background-color: #FFFCFF;
-}
-button {
   width: 75px;
   cursor: pointer;
   box-shadow: 0px 0px 2px gray;
@@ -58,7 +85,23 @@ button {
   padding: 5px;
   border-radius: 5px;
   color: white;
-  
+}
+
+#body-calendario {
+  display: flex;
+  margin-top: 50px;
+  justify-content: center;
+  background-color: #fffcff;
+}
+button {
+  width: 75px;
+  cursor: pointer;
+  box-shadow: 0px 0px 2px grey;
+  border: none;
+  outline: none;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
 }
 
 #header {
@@ -70,8 +113,7 @@ button {
   justify-content: space-between;
 }
 #header button {
-  background-color:#92a1d1;
-  
+  background-color: #92a1d1;
 }
 
 /* todo:mudar widths para max e min para tornar responsive */
@@ -81,13 +123,11 @@ button {
 #semana {
   width: 100%;
   display: flex;
-  color: #247BA0;
+  color: #247ba0;
 }
 .dias-da-semana {
   width: 100px;
   padding: 10px;
-  
- 
 }
 #calendario {
   width: 100%;
@@ -103,7 +143,7 @@ button {
   box-sizing: border-box;
   background-color: white;
   margin: 5px;
-  box-shadow: 0px 0px 3px #CBD4C2;
+  box-shadow: 0px 0px 3px #cbd4c2;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -113,7 +153,7 @@ button {
 }
 
 .div-dia + #diaAtual {
-  background-color:#e8f4fa;
+  background-color: #e8f4fa;
 }
 .event {
   font-size: 10px;
@@ -127,7 +167,7 @@ button {
 /* todo:*/
 .div-diaPreenchimento {
   cursor: default !important;
-  background-color: #FFFCFF !important;
+  background-color: #fffcff !important;
   box-shadow: none !important;
   width: 100px;
   margin: 5px;
@@ -142,7 +182,8 @@ button {
   max-height: 55px;
   overflow: hidden;
 }
-#modalNovoEvento, #modalDeletarEvento {
+#modalNovoEvento,
+#modalDeletarEvento {
   display: none;
   z-index: 20;
   padding: 25px;
@@ -155,7 +196,7 @@ button {
   position: absolute;
   font-family: sans-serif;
 }
-.div-tempo{
+.div-tempo {
   margin-bottom: 25px;
 }
 #inputEventoTitulo {
@@ -168,11 +209,11 @@ button {
   border: none;
   box-shadow: 0px 0px 3px gray;
 }
-#inputEventoDescricao{
+#inputEventoDescricao {
   padding-bottom: 55px;
   width: 100%;
-  height:75px;
-  
+  height: 75px;
+
   box-sizing: border-box;
   margin-bottom: 25px;
   border-radius: 3px;
@@ -180,24 +221,27 @@ button {
   border: none;
   box-shadow: 0px 0px 3px gray;
 }
-#modalDeletarEvento div{
-margin-top: 10px;
-margin-bottom: 10px;
+#modalDeletarEvento div {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-#eventoComeco, #eventoFim{
-display: inline-block;
-font-weight: bolder;
-margin-right: 20px;
+#eventoComeco,
+#eventoFim {
+  display: inline-block;
+  font-weight: bolder;
+  margin-right: 20px;
 }
 
 #inputEventoTitulo.error {
   border: 2px solid red;
 }
-#buttonCancelar, #buttonDeletar {
+#buttonCancelar,
+#buttonDeletar {
   background-color: #d36c6c;
 }
-#buttonSalvar, #buttonFechar {
+#buttonSalvar,
+#buttonFechar {
   background-color: #92a1d1;
 }
 #eventoTitulo {
@@ -213,5 +257,5 @@ margin-right: 20px;
   width: 100vw;
   height: 100vh;
   position: absolute;
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(0, 0, 0, 0.8);
 }
