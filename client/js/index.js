@@ -1,8 +1,17 @@
+
 //note:array de eventos vai estar em formato de string ao inves de objetos. Portanto precisa parsar com JSON.
 //note: local storage e preferivel (entre cookies e session storage) pois permite que a info do usuario nunca expire(nao perder eventos salvos). e funcionam iguais como um JSON object(key, value)
+// let dateSchedule =
+
+let calendario = localStorage.getItem("calendario")
+? JSON.parse(localStorage.getItem("calendario"))
+: [];
+
+
 let eventos = localStorage.getItem("eventos")
   ? JSON.parse(localStorage.getItem("eventos"))
   : [];
+  
 
 // note: "nav" mantem registro do mes que estamos
 let nav = 0;
@@ -20,7 +29,7 @@ const diasDaSemana = [
   "Sábado",
 ];
 
-const calendario = document.getElementById("calendario");
+const div_calendario = document.getElementById("calendario");
 const mesAtual = document.getElementById("mesAtual");
 const buttonProximo = document.getElementById("buttonProximo");
 const buttonVoltar = document.getElementById("buttonVoltar");
@@ -46,9 +55,23 @@ const buttonFechar = document.getElementById("buttonFechar");
 const buttonEditar = document.getElementById("buttonEditar");
 
 //essa funcao abre um popup na tela quando o user clicar em dos blocos de dia do calendario
-function abrirModal(date) {
+
+
+
+/*
+todo: add param eventTitle (when event is clicked) 2. open modalDeletarEvento if eventTitle not null 
+**/
+function abrirModal(date, eventTitle) {
+  
   clicado = date;
+  console.dir(eventos);
   const eventosDoDia = eventos.find((e) => e.date === clicado);
+
+  // if(eventTitle != null){
+  //   modalDeletarEvento.style.display = "block";
+
+  //   eventosDoDia.find()
+  // }
   if (eventosDoDia) {
     modalDeletarEvento.style.display = "block";
     document.getElementById("eventoTitulo").innerText = eventosDoDia.title;
@@ -72,10 +95,24 @@ function fecharModal() {
   clicado = null;
   load();
 }
-//essa funcao serve para salvar os eventos que eu criar em um dia
+
 function salvarEvento() {
+
+  // ? como achar evento?
+  // console.log(eventos.find(e));
+  
   if (inputEventoTitulo.value) {
     inputEventoTitulo.classList.remove("error");
+    /*
+    todo: reformatar eventos JSON, 
+    encapsular infos depois de date para uma JSON array para caber varios eventos
+
+    Pseudocode de calendar object em localstorage: 
+    calendar.find(e => date == clicado)
+    if (not find)
+      create new date 
+    **/
+   
     eventos.push({
       date: clicado,
       title: inputEventoTitulo.value,
@@ -84,7 +121,36 @@ function salvarEvento() {
       end: eventoFim.value,
     });
 
+    
+      //RASCUNHO: 
+      // let dateSchedule = calendar.find((e) => e.date == clicado); 
+      // if (dateSchedule){
+      //   let event = dateSchedule.eventos.find(e => e.title == inputEventoTitulo.value);
+      //   if(event){
+      //       console.log("There is already an event with the same title, do");
+            
+      //   } else{
+      //     dateSchedule.eventos.push({
+      //       title: inputEventoTitulo.value,
+      //       description: inputEventoDescricao.value,
+      //       start: eventoInicio.value,
+      //       end: eventoFim.value,            
+      //     })
+      //   }
+      // } else {
+      //   calendario.push({date: clicado, eventos: [{
+      //     title: inputEventoTitulo.value,
+      //     description: inputEventoDescricao.value,
+      //     start: eventoInicio.value,
+      //     end: eventoFim.value, 
+      //     }]
+      // })
+      // }
+
+
     localStorage.setItem("eventos", JSON.stringify(eventos));
+    // localStorage.setItem("calendario", JSON.stringify(eventos));
+
     inputEventoTitulo.value = "";
     inputEventoDescricao.value = "";
     eventoFim.value = "";
@@ -107,7 +173,7 @@ function deletarEvento() {
 // a funcao load() serve para preencher e mostrar o calendario, levando em consideracao os eventos, e o mes que se esta
 function load() {
   const dt = new Date();
-  console.log(dt);
+  // console.log(dt);
   if (nav !== 0) {
     dt.setMonth(new Date().getMonth() + nav);
   }
@@ -135,11 +201,11 @@ function load() {
   const localDiaDaSemana =
     diaLocal.substring(0, 1).toUpperCase() +
     diaLocal.split(", ")[0].substring(1);
-  console.log(localDiaDaSemana);
+  // console.log(localDiaDaSemana);
 
   //calculando os dias de preenchimento: os dias antes do primeiro dia do mes para renderizar o calendario uniformemente
   const diasDePreenchimento = diasDaSemana.indexOf(localDiaDaSemana);
-  console.log(diasDePreenchimento);
+  // console.log(diasDePreenchimento);
 
   //mostra o mes atual e ano acima do calendario
   mesAtual.innerText =
@@ -149,33 +215,49 @@ function load() {
     ano;
 
   //limpa o calendario de valores anteriores para nao sobreescrever com os valores antigos no for loop
-  calendario.innerHTML = "";
+  div_calendario.innerHTML = "";
+  
 
   for (let i = 1; i <= diasDePreenchimento + diasDoMes; i++) {
     const blocoDeDia = document.createElement("div");
 
+      // * format of dateString === (local storage) eventos.date 
+    const dateString = `${mes}/${i - diasDePreenchimento}/${ano}`;
+
     if (i > diasDePreenchimento) {
       blocoDeDia.classList.add("div-dia");
       blocoDeDia.addEventListener("click", () =>
-        abrirModal(`${mes}/${i - diasDePreenchimento}/${ano}`)
+        abrirModal(dateString, null)
       );
+  
       blocoDeDia.innerText = i - diasDePreenchimento;
-      const diaString = `${mes}/${i - diasDePreenchimento}/${ano}`;
-      const eventosDoDia = eventos.find((e) => e.date === diaString);
+      const eventosDoDia = eventos.find((e) => e.date === dateString);
 
       if (i - diasDePreenchimento === dia && nav === 0) {
         blocoDeDia.id = "diaAtual";
       }
+
       if (eventosDoDia) {
         const eventDiv = document.createElement("div");
         eventDiv.classList.add("eventos");
         eventDiv.innerText = eventosDoDia.title;
         blocoDeDia.appendChild(eventDiv);
+
+        //
+        eventDiv.addEventListener("click", () => {
+          console.dir(eventDiv);
+          console.dir(eventDiv.parentElement);
+          console.dir(dateString);
+          abrirModal(dateString, eventDiv.innerText);
+
+        }
+        );
+        
       }
     } else {
       blocoDeDia.classList.add("div-diaPreenchimento");
     }
-    calendario.appendChild(blocoDeDia);
+    div_calendario.appendChild(blocoDeDia);
   }
 }
 
