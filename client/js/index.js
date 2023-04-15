@@ -1,22 +1,25 @@
 
+
 //note:array de eventos vai estar em formato de string ao inves de objetos. Portanto precisa parsar com JSON.
 //note: local storage e preferivel (entre cookies e session storage) pois permite que a info do usuario nunca expire(nao perder eventos salvos). e funcionam iguais como um JSON object(key, value)
 // let dateSchedule =
 
-let calendario = localStorage.getItem("calendario")
-? JSON.parse(localStorage.getItem("calendario"))
+let calendar = localStorage.getItem("calendar")
+? JSON.parse(localStorage.getItem("calendar"))
 : [];
 
 
-let eventos = localStorage.getItem("eventos")
-  ? JSON.parse(localStorage.getItem("eventos"))
-  : [];
+// let eventos = localStorage.getItem("eventos")
+//   ? JSON.parse(localStorage.getItem("eventos"))
+//   : [];
   
 
 // note: "nav" mantem registro do mes que estamos
 let nav = 0;
 //note: "clicado" mantem registro se um dia do mes foi clicado ou nao
-let clicado = null;
+let diaClicado = null;
+
+let eventoClicado = null;
 
 //note: dependendo do dia da semana que for o primeiro dia do mes, so preciso contar os dias anteriores da semana para saber quantos dias de preenchimento precisa
 const diasDaSemana = [
@@ -58,28 +61,37 @@ const buttonEditar = document.getElementById("buttonEditar");
 
 
 
-/*
-todo: add param eventTitle (when event is clicked) 2. open modalDeletarEvento if eventTitle not null 
-**/
-function abrirModal(date, eventTitle) {
+
+function abrirModal(date, dateEvent) {
   
-  clicado = date;
-  console.dir(eventos);
-  const eventosDoDia = eventos.find((e) => e.date === clicado);
+  diaClicado = date;
+  console.dir(calendar);
+  const dateSchedule = calendar.find((e) => e.date === diaClicado);
 
-  // if(eventTitle != null){
-  //   modalDeletarEvento.style.display = "block";
+  if(dateSchedule){
 
-  //   eventosDoDia.find()
-  // }
-  if (eventosDoDia) {
-    modalDeletarEvento.style.display = "block";
-    document.getElementById("eventoTitulo").innerText = eventosDoDia.title;
-    document.getElementById("eventoDescricao").innerText =
-      eventosDoDia.description;
-    document.getElementById("eventoComeco").innerText = eventosDoDia.start;
-    document.getElementById("eventoFim").innerText = eventosDoDia.end;
-  } else {
+    if(dateEvent != null){
+     eventoClicado = dateEvent;
+
+      modalDeletarEvento.style.display = "block";
+      document.getElementById("eventoTitulo").innerText = dateEvent.title;
+      document.getElementById("eventoDescricao").innerText =
+        dateEvent.description;
+      document.getElementById("eventoComeco").innerText = dateEvent.start;
+      document.getElementById("eventoFim").innerText = dateEvent.end;
+
+      
+
+    } else {
+     modalNovoEvento.style.display = "block";
+    // modalDeletarEvento.style.display = "block";
+    // document.getElementById("eventoTitulo").innerText = eventosDoDia.title;
+    // document.getElementById("eventoDescricao").innerText =
+    //   eventosDoDia.description;
+    // document.getElementById("eventoComeco").innerText = eventosDoDia.start;
+    // document.getElementById("eventoFim").innerText = eventosDoDia.end;
+    }
+ } else {
     modalNovoEvento.style.display = "block";
   }
   backDrop.style.display = "block";
@@ -92,7 +104,8 @@ function fecharModal() {
   backDrop.style.display = "none";
   modalDeletarEvento.style.display = "none";
   inputEventoTitulo.value = "";
-  clicado = null;
+  diaClicado = null;
+  eventoClicado = null;
   load();
 }
 
@@ -104,7 +117,7 @@ function salvarEvento() {
   if (inputEventoTitulo.value) {
     inputEventoTitulo.classList.remove("error");
     /*
-    todo: reformatar eventos JSON, 
+    
     encapsular infos depois de date para uma JSON array para caber varios eventos
 
     Pseudocode de calendar object em localstorage: 
@@ -113,43 +126,43 @@ function salvarEvento() {
       create new date 
     **/
    
-    eventos.push({
-      date: clicado,
-      title: inputEventoTitulo.value,
-      description: inputEventoDescricao.value,
-      start: eventoInicio.value,
-      end: eventoFim.value,
-    });
+    // eventos.push({
+    //   date: clicado,
+    //   title: inputEventoTitulo.value,
+    //   description: inputEventoDescricao.value,
+    //   start: eventoInicio.value,
+    //   end: eventoFim.value,
+    // });
 
     
       //RASCUNHO: 
-      // let dateSchedule = calendar.find((e) => e.date == clicado); 
-      // if (dateSchedule){
-      //   let event = dateSchedule.eventos.find(e => e.title == inputEventoTitulo.value);
-      //   if(event){
-      //       console.log("There is already an event with the same title, do");
+      let dateSchedule = calendar.find((e) => e.date == diaClicado); 
+      if (dateSchedule){
+        let event = dateSchedule.dateEvents.find(e => e.title == inputEventoTitulo.value);
+        if(event){
+            console.log("There is already an event with the same title, do");
             
-      //   } else{
-      //     dateSchedule.eventos.push({
-      //       title: inputEventoTitulo.value,
-      //       description: inputEventoDescricao.value,
-      //       start: eventoInicio.value,
-      //       end: eventoFim.value,            
-      //     })
-      //   }
-      // } else {
-      //   calendario.push({date: clicado, eventos: [{
-      //     title: inputEventoTitulo.value,
-      //     description: inputEventoDescricao.value,
-      //     start: eventoInicio.value,
-      //     end: eventoFim.value, 
-      //     }]
-      // })
-      // }
+        } else{
+          dateSchedule.dateEvents.push({
+            title: inputEventoTitulo.value,
+            description: inputEventoDescricao.value,
+            start: eventoInicio.value,
+            end: eventoFim.value,            
+          })
+        }
+      } else {
+        calendar.push({date: diaClicado, dateEvents: [{
+          title: inputEventoTitulo.value,
+          description: inputEventoDescricao.value,
+          start: eventoInicio.value,
+          end: eventoFim.value, 
+          }]
+      })
+      }
 
 
-    localStorage.setItem("eventos", JSON.stringify(eventos));
-    // localStorage.setItem("calendario", JSON.stringify(eventos));
+    // localStorage.setItem("eventos", JSON.stringify(eventos));
+    localStorage.setItem("calendar", JSON.stringify(calendar));
 
     inputEventoTitulo.value = "";
     inputEventoDescricao.value = "";
@@ -163,10 +176,17 @@ function salvarEvento() {
 
 function editarEvento() {}
 
-function deletarEvento() {
-  eventos = eventos.filter((e) => e.date !== clicado);
-  localStorage.setItem("eventos", JSON.stringify(eventos));
 
+//todo: dateEvent nao e updated em deltarModal, 
+// ele continua com o primeiro evento removido
+
+function deletarEvento(dateEvent) {
+  // eventos = eventos.filter((e) => e.date !== clicado);
+  const dateEvents = calendar.find((e) => e.date === diaClicado).dateEvents; 
+  calendar.find((e) => e.date === diaClicado).dateEvents = dateEvents.filter((e) => e !== eventoClicado);
+  
+  // buttonDeletar.removeEventListener("click", deletarEvento(eventTitle));
+  localStorage.setItem("calendar", JSON.stringify(calendar));
   fecharModal();
 }
 
@@ -218,46 +238,81 @@ function load() {
   div_calendario.innerHTML = "";
   
 
-  for (let i = 1; i <= diasDePreenchimento + diasDoMes; i++) {
+  /*
+    run for each day of the month displayed
+  **/
+  for (let dia = 1; dia <= diasDePreenchimento + diasDoMes; dia++) {
+    fillDateBlocks(dia);
+  }
+
+  function fillDateBlocks(dia) {
     const blocoDeDia = document.createElement("div");
 
-      // * format of dateString === (local storage) eventos.date 
-    const dateString = `${mes}/${i - diasDePreenchimento}/${ano}`;
+    // * format of dateString === (local storage) eventos.date 
+    const dateString = `${mes}/${dia - diasDePreenchimento}/${ano}`;
 
-    if (i > diasDePreenchimento) {
+    if (dia > diasDePreenchimento) {
       blocoDeDia.classList.add("div-dia");
-      blocoDeDia.addEventListener("click", () =>
-        abrirModal(dateString, null)
-      );
-  
-      blocoDeDia.innerText = i - diasDePreenchimento;
-      const eventosDoDia = eventos.find((e) => e.date === dateString);
 
-      if (i - diasDePreenchimento === dia && nav === 0) {
+
+      blocoDeDia.innerText = dia - diasDePreenchimento;
+
+      if (dia - diasDePreenchimento === dia && nav === 0) {
         blocoDeDia.id = "diaAtual";
       }
 
-      if (eventosDoDia) {
-        const eventDiv = document.createElement("div");
-        eventDiv.classList.add("eventos");
-        eventDiv.innerText = eventosDoDia.title;
-        blocoDeDia.appendChild(eventDiv);
+      let dateEvents = calendar.find((e) => e.date === dateString) ? 
+      calendar.find((e) => e.date === dateString).dateEvents : 
+      null;
 
-        //
-        eventDiv.addEventListener("click", () => {
-          console.dir(eventDiv);
-          console.dir(eventDiv.parentElement);
-          console.dir(dateString);
-          abrirModal(dateString, eventDiv.innerText);
-
-        }
-        );
+      // ! caution here
+      
         
-      }
+          fillEventBlocks(dateEvents, dateString, blocoDeDia);
+          //
+          // eventDiv.addEventListener("click", () => {
+          // })
+      
+      
     } else {
       blocoDeDia.classList.add("div-diaPreenchimento");
     }
     div_calendario.appendChild(blocoDeDia);
+  }
+
+
+  /*
+todo: testar passar events[i] como param de abrir modal se targetElement === eventDiv
+  **/
+  function fillEventBlocks(dateEvents, dateString, blocoDeDia) {
+    let eventDiv = null;
+  
+    //
+    if(dateEvents !== null && dateEvents.length != 0){
+       eventDiv = document.createElement("div");
+      eventDiv.classList.add("eventos");
+      eventDiv.innerHTML = dateEvents[0].title;
+      blocoDeDia.appendChild(eventDiv);
+    }
+
+    blocoDeDia.addEventListener("click", (event) => {
+      const targetElement = event.target;
+      if(targetElement === eventDiv){
+        console.log(`? target element ${targetElement.innerHTML} === eventDiv ${eventDiv.innerHTML}`);
+        abrirModal(dateString, dateEvents[0]);
+      
+      } else {
+          abrirModal(dateString, null);
+        }
+      // if (targetElement.classList.contains("eventos")) {
+
+      //   console.log(`O evento ${targetElement.innerHTML} 
+      //   com innerText ${targetElement.innerText}
+      //    com tipo ${targetElement.type} 
+      //    na data ${dateString} foi clicado:`);
+      //    //   abrirModal(dateString, eventDiv.innerText);
+      // } 
+    });
   }
 }
 
@@ -270,10 +325,9 @@ function clicarButtons() {
     nav--;
     load();
   });
-
+  buttonDeletar.addEventListener("click", () => deletarEvento());
   buttonCancelar.addEventListener("click", () => fecharModal());
   buttonSalvar.addEventListener("click", () => salvarEvento());
-  buttonDeletar.addEventListener("click", () => deletarEvento());
   buttonFechar.addEventListener("click", () => fecharModal());
   buttonEditar.addEventListener("click", () => editarEvento());
 }
