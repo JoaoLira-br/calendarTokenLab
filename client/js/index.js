@@ -285,25 +285,40 @@ function load() {
 todo: testar passar events[i] como param de abrir modal se targetElement === eventDiv
   **/
   function fillEventBlocks(dateEvents, dateString, blocoDeDia) {
-    let eventDiv = null;
-  
+    let eventDivs = [];
+    
     //
     if(dateEvents !== null && dateEvents.length != 0){
-       eventDiv = document.createElement("div");
-      eventDiv.classList.add("eventos");
-      eventDiv.innerHTML = dateEvents[0].title;
-      blocoDeDia.appendChild(eventDiv);
+      let index = 0;
+      dateEvents.forEach(dateEvent => {
+        eventDivs.push(document.createElement("div"));
+        eventDivs[index].classList.add("eventos");
+        eventDivs[index].innerHTML = dateEvent.title;
+        blocoDeDia.appendChild(eventDivs[index]);
+        index++;
+      });
+      //  eventDiv = document.createElement("div");
+      // eventDiv.classList.add("eventos");
+      // eventDiv.innerHTML = dateEvents[0].title;
+      // blocoDeDia.appendChild(eventDiv);
     }
 
     blocoDeDia.addEventListener("click", (event) => {
       const targetElement = event.target;
-      if(targetElement === eventDiv){
-        console.log(`? target element ${targetElement.innerHTML} === eventDiv ${eventDiv.innerHTML}`);
-        abrirModal(dateString, dateEvents[0]);
+      console.log(`? target element ${targetElement.innerHTML}`);
+      let idxOfTarget = eventDivs.indexOf(targetElement);
       
-      } else {
-          abrirModal(dateString, null);
-        }
+      idxOfTarget != -1 
+      ? abrirModal(dateString, dateEvents[idxOfTarget]) 
+      : abrirModal(dateString, null)
+
+      // if(eventDivs.indexOf(targetElement != -1)){
+      //   // console.log(`? target element ${targetElement.innerHTML} === eventDiv ${eventDivs.innerHTML}`);
+      //   abrirModal(dateString, dateEvents[0]);
+      
+      // } else {
+      //     abrirModal(dateString, null);
+      //   }
       // if (targetElement.classList.contains("eventos")) {
 
       //   console.log(`O evento ${targetElement.innerHTML} 
