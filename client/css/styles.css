@@ -4,9 +4,14 @@
 
   text-align: center;
   padding: 100px 0;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
 }
 .div-formLogin {
-  padding: 50px 0;
+  /*! padding: 50px 0; */
+  margin: 0 auto;
 }
 .wrapper-signup {
   display: flex;
@@ -34,8 +39,8 @@
 }
 
 form {
-  min-width: 20rem;
-  max-width: 30rem;
+  min-width: 15rem;
+  min-height: 30rem;
   padding: 25px;
   border: 1px solid;
   border-color: #00000033;
@@ -112,8 +117,30 @@ button {
   display: flex;
   justify-content: space-between;
 }
+
+#colorSchemes {
+  display: flex;
+  justify-content: space-between;
+  width: 100px;
+  margin: auto;
+}
+
 #header button {
   background-color: #92a1d1;
+  /*! min-width: fit-content; */
+}
+/* #colorSchemes button {
+  background-color: #000000;
+  max-width: fit-content;
+  padding: inherit;
+  max-height: inherit;
+} */
+
+#header canvas {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  display: inline-block;
 }
 
 /* todo:mudar widths para max e min para tornar responsive */
@@ -177,13 +204,15 @@ button {
   font-size: 10px;
   padding: 3px;
   background-color: #58bae4;
+  background-color: hsla(120, saturation, lightness, alpha);
   color: white;
   border-radius: 5px;
   max-height: 55px;
   overflow: hidden;
 }
 #modalNovoEvento,
-#modalDeletarEvento {
+#modalDeletarEvento,
+#modalEditarEvento {
   display: none;
   z-index: 20;
   padding: 25px;
@@ -199,7 +228,8 @@ button {
 .div-tempo {
   margin-bottom: 25px;
 }
-#inputEventoTitulo {
+#inputEventoTitulo,
+#me_inputEventoTitulo {
   padding: 10px;
   width: 100%;
   box-sizing: border-box;
@@ -209,11 +239,11 @@ button {
   border: none;
   box-shadow: 0px 0px 3px gray;
 }
-#inputEventoDescricao {
+#inputEventoDescricao,
+#me_inputEventoDescricao {
   padding-bottom: 55px;
-  width: 100%;
+  max-width: 100%;
   height: 75px;
-
   box-sizing: border-box;
   margin-bottom: 25px;
   border-radius: 3px;
@@ -227,23 +257,37 @@ button {
 }
 
 #eventoComeco,
-#eventoFim {
+#eventoFim,
+#me_eventoComeco,
+#me_inputEventoFim {
   display: inline-block;
   font-weight: bolder;
   margin-right: 20px;
 }
 
-#inputEventoTitulo.error {
+#inputEventoTitulo.error,
+#me_inputEventoTitulo {
   border: 2px solid red;
 }
-#buttonCancelar,
-#buttonDeletar {
+#buttonDeletar,
+#me_buttonCancelar {
   background-color: #d36c6c;
 }
-#buttonSalvar,
-#buttonFechar {
+#buttonFechar,
+#me_buttonCancelar,
+#buttonCancelar {
+  background-color: #404040;
+}
+
+#buttonCriar,
+#me_buttonSalvar {
   background-color: #92a1d1;
 }
+
+#buttonEditar {
+  background-color: #a0a0a0;
+}
+
 #eventoTitulo {
   font-size: 2rem;
   font-weight: bolder;
