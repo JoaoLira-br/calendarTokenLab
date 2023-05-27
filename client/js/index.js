@@ -14,7 +14,8 @@ let calendar = localStorage.getItem("calendar")
 let nav = 0;
 //note: "clicado" mantem registro se um dia do mes foi clicado ou nao
 let diaClicado = null;
-
+let ftScheme = null;
+let bgScheme = null;
 let eventoClicado = null;
 let dateEvent = null;
 
@@ -29,12 +30,14 @@ const diasDaSemana = [
   "Sábado",
 ];
 
+const body = document.querySelector("body");
 const beeScheme = document.getElementById("beeScheme");
 const whiteBlueScheme = document.getElementById("whiteBlueScheme");
 const redBlackScheme = document.getElementById("redBlackScheme");
+const schemeCvs = document.querySelectorAll("canvas");
 
 const div_calendario = document.getElementById("calendario");
-const mesAtual = document.getElementById("mesAtual");
+const div_mesAtual = document.getElementById("mesAtual");
 const buttonProximo = document.getElementById("buttonProximo");
 const buttonVoltar = document.getElementById("buttonVoltar");
 
@@ -106,14 +109,13 @@ function load() {
 
   //calculando os dias de preenchimento: os dias antes do primeiro dia do mes para renderizar o calendario uniformemente
   const diasDePreenchimento = diasDaSemana.indexOf(localDiaDaSemana);
-  // console.log(diasDePreenchimento);
+  
+  div_mesAtual.innerHTML = "";
 
   //mostra o mes atual e ano acima do calendario
-  mesAtual.innerText =
-    nomeMesAtual.substring(0, 1).toUpperCase() +
-    nomeMesAtual.substring(1) +
-    ", " +
-    ano;
+  const monthYear = document.createElement("h2");
+  monthYear.innerText = nomeMesAtual + " " + ano;
+  div_mesAtual.appendChild(monthYear);
 
   //limpa o calendario de valores anteriores para nao sobreescrever com os valores antigos no for loop
   div_calendario.innerHTML = "";
@@ -163,6 +165,8 @@ function load() {
       dateEvents.forEach((dateEvent) => {
         eventDivs.push(document.createElement("div"));
         eventDivs[index].classList.add("eventos");
+        if (ftScheme) eventDivs[index].classList.add(ftScheme);
+        if (bgScheme) eventDivs[index].classList.add(bgScheme);
         eventDivs[index].innerHTML = dateEvent.title;
         blocoDeDia.appendChild(eventDivs[index]);
         index++;
@@ -221,44 +225,6 @@ function abrirModal(date, dateEvent) {
   //  } else {
   //     modalNovoEvento.style.display = "block";
   //   }
-  backDrop.style.display = "block";
-}
-
-function fecharModal() {
-  inputEventoTitulo.classList.remove("error");
-  modalNovoEvento.style.display = "none";
-  backDrop.style.display = "none";
-  modalDeletarEvento.style.display = "none";
-  inputEventoTitulo.value = "";
-  modalEditarEvento.style.display = "none";
-  me_inputEventoDescricao.value = "";
-  me_inputEventoInicio.value = "";
-  me_inputEventoFim.value = "";
-  me_inputEventoTitulo.value = "";
-
-  diaClicado = null;
-  eventoClicado = null;
-  load();
-}
-
-/*
- Goes to modal modalDestino WITHOUT changing the diaClicado and eventoClicado
-**/
-function trocarModal(modalDestino) {
-  inputEventoTitulo.classList.remove("error");
-  modalNovoEvento.style.display = "none";
-  backDrop.style.display = "none";
-  modalDeletarEvento.style.display = "none";
-  inputEventoTitulo.value = "";
-  switch (modalDestino) {
-    case modalEditarEvento:
-      modalEditarEvento.style.display = "block";
-      break;
-    case modalDeletarEvento:
-      modalDeletarEvento.style.display = "block";
-    default:
-      break;
-  }
   backDrop.style.display = "block";
 }
 
@@ -348,6 +314,75 @@ function editarEvento() {
   //todo: uma vez que usuario terminou workflow no editar anular o evento clicado e dia clicado
 }
 
+function deletarEvento() {
+  // eventos = eventos.filter((e) => e.date !== clicado);
+  const dateEvents = calendar.find((e) => e.date === diaClicado).dateEvents;
+  calendar.find((e) => e.date === diaClicado).dateEvents = dateEvents.filter(
+    (e) => e !== eventoClicado
+  );
+
+  // buttonDeletar.removeEventListener("click", deletarEvento(eventTitle));
+  localStorage.setItem("calendar", JSON.stringify(calendar));
+  fecharModal();
+}
+
+function fecharModal() {
+  inputEventoTitulo.classList.remove("error");
+  modalNovoEvento.style.display = "none";
+  backDrop.style.display = "none";
+  modalDeletarEvento.style.display = "none";
+  inputEventoTitulo.value = "";
+  modalEditarEvento.style.display = "none";
+  me_inputEventoDescricao.value = "";
+  me_inputEventoInicio.value = "";
+  me_inputEventoFim.value = "";
+  me_inputEventoTitulo.value = "";
+
+  diaClicado = null;
+  eventoClicado = null;
+  load();
+}
+
+function removeClassesByPattern(element, regexPattern) {
+  // Iterate over the classList
+  for (var i = 0; i < element.classList.length; i++) {
+    // Reset the lastIndex property of the regex pattern if it's global
+    if (regexPattern.global) {
+      regexPattern.lastIndex = 0;
+    }
+
+    // Test the class name against the regex pattern
+    if (regexPattern.test(element.classList[i])) {
+      // Remove the class if it matches the pattern
+      element.classList.remove(element.classList[i]);
+
+      // Decrement the counter to account for the removed class
+      i--;
+    }
+  }
+}
+
+/*
+ Goes to modal modalDestino WITHOUT changing the diaClicado and eventoClicado
+**/
+function trocarModal(modalDestino) {
+  inputEventoTitulo.classList.remove("error");
+  modalNovoEvento.style.display = "none";
+  backDrop.style.display = "none";
+  modalDeletarEvento.style.display = "none";
+  inputEventoTitulo.value = "";
+  switch (modalDestino) {
+    case modalEditarEvento:
+      modalEditarEvento.style.display = "block";
+      break;
+    case modalDeletarEvento:
+      modalDeletarEvento.style.display = "block";
+    default:
+      break;
+  }
+  backDrop.style.display = "block";
+}
+
 function fillColorPicker() {
   // const beeScheme = document.getElementById("beeScheme");
   // const whiteBlueScheme = document.getElementById("whiteBlueScheme");
@@ -396,16 +431,57 @@ function fillColorPicker() {
   );
 }
 
-function deletarEvento() {
-  // eventos = eventos.filter((e) => e.date !== clicado);
-  const dateEvents = calendar.find((e) => e.date === diaClicado).dateEvents;
-  calendar.find((e) => e.date === diaClicado).dateEvents = dateEvents.filter(
-    (e) => e !== eventoClicado
-  );
+function applyScheme(event) {
+  // Pattern to match strings that start with 'ft'
+  const ftPattern = /^ft/;
+  // Pattern to match strings that start with 'bg'
+  const bgPattern = /^bg/;
 
-  // buttonDeletar.removeEventListener("click", deletarEvento(eventTitle));
-  localStorage.setItem("calendar", JSON.stringify(calendar));
-  fecharModal();
+  const div_semana = document.getElementById("semana");
+  const div_diasDaSemana = document.getElementsByClassName("dias-da-semana");
+  const div_eventos = document.getElementsByClassName("eventos");
+  const btns_nav = document.querySelectorAll("#header button");
+  const div_register = document.getElementById("register");
+
+  const fontSchemeArr = [
+    div_mesAtual,
+    div_register,
+    ...div_diasDaSemana,
+    ...div_eventos,
+    ...btns_nav,
+  ];
+  const bgColorSchemeArr = [body, ...div_eventos, ...btns_nav];
+
+  const schemeId = event.target.id;
+  switch (schemeId) {
+    case "beeScheme":
+      ftScheme = "ft_beeScheme";
+      bgScheme = "bg_beeScheme";
+      break;
+    case "whiteBlueScheme":
+      ftScheme = "ft_whiteBlueScheme";
+      bgScheme = "bg_whiteBlueScheme";
+      break;
+    case "redBlackScheme":
+      ftScheme = "ft_redBlackScheme";
+      bgScheme = "bg_redBlackScheme";
+    default:
+      console.log("No id added to clicked canvas");
+      break;
+  }
+
+  if (ftScheme && bgScheme) applySchemeClasses(ftScheme, bgScheme);
+
+  function applySchemeClasses(cls_ftScheme, cls_bgScheme) {
+    fontSchemeArr.forEach((div) => {
+      removeClassesByPattern(div, ftPattern);
+      div.classList.add(cls_ftScheme);
+    });
+    bgColorSchemeArr.forEach((div) => {
+      removeClassesByPattern(div, bgPattern);
+      div.classList.add(cls_bgScheme);
+    });
+  }
 }
 
 function clicarButtons() {
@@ -424,6 +500,14 @@ function clicarButtons() {
   me_buttonSalvar.addEventListener("click", () => salvarEvento());
   buttonFechar.addEventListener("click", () => fecharModal());
   buttonEditar.addEventListener("click", () => editarEvento());
+  schemeCvs.forEach((canvas) => {
+    canvas.addEventListener("click", (event) => {
+      applyScheme(event);
+    });
+  });
+  // beeScheme.addEventListener("click", (event) => applyBeeScheme(event));
+  // whiteBlueScheme.addEventListener("click", () => applyWBScheme());
+  // redBlackScheme.addEventListener("click", () => applyRBScheme());
 }
 
 clicarButtons();

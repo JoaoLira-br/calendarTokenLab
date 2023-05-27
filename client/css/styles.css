@@ -1,3 +1,22 @@
+.ft_beeScheme {
+  color: #d6aa3e !important;
+}
+.bg_beeScheme {
+  background-color: #312428 !important;
+}
+.ft_whiteBlueScheme {
+  color: #f8edf8 !important;
+}
+.bg_whiteBlueScheme {
+  background-color: #a7ddf9 !important;
+}
+.ft_redBlackScheme {
+  color: #ec6773 !important;
+}
+.bg_redBlackScheme {
+  background-color: #5b5356 !important;
+}
+
 #body-login .wrapper {
   justify-content: center;
   margin: auto;
@@ -9,6 +28,32 @@
   align-content: center;
   justify-content: center;
 }
+h2 {
+  text-transform: capitalize;
+  text-shadow: -1px 1px #5e4040;
+  letter-spacing: 0.05em;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+a {
+  text-decoration: none;
+  color: #505050;
+  font-weight: bold;
+}
+a:hover {
+  /* text-decoration: dashed; */
+  text-decoration: underline;
+  color: #3030a3;
+}
+a:visited {
+  color: #3030a3;
+}
+
+#register {
+  display: flex;
+  flex-direction: column;
+}
+
 .div-formLogin {
   /*! padding: 50px 0; */
   margin: 0 auto;
@@ -61,11 +106,19 @@ button#btn-sign-up {
 }
 #body-login h1 {
   color: #d36c6c;
+  text-align: center;
   font-family: sans-serif;
   font-size: 2.5em;
 }
+#body-calendario h1 {
+}
 h1 {
   color: #d36c6c;
+  text-shadow: -1px 1px #5e4040;
+  text-transform: uppercase;
+  padding-bottom: 0.5em;
+  letter-spacing: 0.05em;
+  word-spacing: 0.2em;
 }
 input {
   border-width: 0 0 1px 0;
@@ -91,7 +144,9 @@ input {
   border-radius: 5px;
   color: white;
 }
-
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
 #body-calendario {
   display: flex;
   margin-top: 50px;
@@ -112,7 +167,6 @@ button {
 #header {
   padding: 10px;
   color: #d36c6c;
-  font-size: 26px;
   font-family: sans-serif;
   display: flex;
   justify-content: space-between;
@@ -126,15 +180,13 @@ button {
 }
 
 #header button {
-  background-color: #92a1d1;
+  background-color: #58bae4fc;
   /*! min-width: fit-content; */
 }
-/* #colorSchemes button {
-  background-color: #000000;
-  max-width: fit-content;
-  padding: inherit;
-  max-height: inherit;
-} */
+
+#header button:hover {
+  background-color: #389ac3;
+}
 
 #header canvas {
   width: 30px;
@@ -151,10 +203,15 @@ button {
   width: 100%;
   display: flex;
   color: #247ba0;
+  font-weight: bold;
+  /* margin-left: 1.1em; */
 }
 .dias-da-semana {
   width: 100px;
   padding: 10px;
+}
+.dias-da-semana:not(:first-child) {
+  margin-left: 1.125em;
 }
 #calendario {
   width: 100%;
@@ -176,7 +233,10 @@ button {
   justify-content: space-between;
 }
 .div-dia:hover {
-  background-color: #e8faed;
+  /* background-color: #e8faed;
+   */
+  background-color: #f1fff5;
+  border: 1px #209080 solid;
 }
 
 .div-dia + #diaAtual {
@@ -194,12 +254,14 @@ button {
 /* todo:*/
 .div-diaPreenchimento {
   cursor: default !important;
-  background-color: #fffcff !important;
+  /* background-color: #fffcff !important; */
   box-shadow: none !important;
   width: 100px;
   margin: 5px;
 }
-
+.eventos:hover {
+  background-color: #389ac3;
+}
 .eventos {
   font-size: 10px;
   padding: 3px;
@@ -269,27 +331,46 @@ button {
 #me_inputEventoTitulo {
   border: 2px solid red;
 }
+div[id^="modal"] button:active {
+  width: 80px;
+  padding: 6px;
+}
+
 #buttonDeletar,
 #me_buttonCancelar {
   background-color: #d36c6c;
 }
+#buttonDeletar:hover,
+#me_buttonCancelar:hover {
+  background-color: #c34c4c;
+}
 #buttonFechar,
-#me_buttonCancelar,
 #buttonCancelar {
   background-color: #404040;
+}
+#buttonFechar:hover,
+#buttonCancelar:hover {
+  background-color: #202020;
 }
 
 #buttonCriar,
 #me_buttonSalvar {
   background-color: #92a1d1;
 }
+#buttonCriar:hover,
+#me_buttonSalvar:hover {
+  background-color: #8291e1;
+}
 
 #buttonEditar {
   background-color: #a0a0a0;
 }
+#buttonEditar:hover {
+  background-color: #909090;
+}
 
 #eventoTitulo {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bolder;
   font-style: normal;
 }

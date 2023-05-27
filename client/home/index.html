@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="./../css/styles.css" />
   </head>
   <body id="body-calendario">
-    <header></header>
     <main>
       <!-- todo:modals vao servir como popups para adicionar eventos no calendario -->
+      <header><h1>Calendar</h1></header>
       <div class="wrapper">
         <div id="header">
           <div id="mesAtual"></div>
@@ -27,7 +27,7 @@
               a red and black color scheme for the calendar
             </canvas>
           </div>
-          <div>
+          <div id="nav">
             <button id="buttonVoltar">Voltar</button>
             <button id="buttonProximo">Proximo</button>
           </div>
@@ -35,12 +35,12 @@
 
         <div id="semana">
           <div class="dias-da-semana">Domingo</div>
-          <div class="dias-da-semana">Segunda-feira</div>
+          <div class="dias-da-semana">Segunda</div>
           <!-- nota formatar nome terca feira -->
-          <div class="dias-da-semana">Terça-feira</div>
-          <div class="dias-da-semana">Quarta-feira</div>
-          <div class="dias-da-semana">Quinta-feira</div>
-          <div class="dias-da-semana">Sexta-feira</div>
+          <div class="dias-da-semana">Terça</div>
+          <div class="dias-da-semana">Quarta</div>
+          <div class="dias-da-semana">Quinta</div>
+          <div class="dias-da-semana">Sexta</div>
           <div class="dias-da-semana">Sábado</div>
         </div>
         <div id="calendario"></div>
@@ -123,8 +123,10 @@
       <div id="modalBackDrop"></div>
     </main>
     <footer>
-      <a href="./signup.html">Signup</a>
-      <a href="./login.html">Login</a>
+      <div id="register">
+        <a href="./signup.html">Signup</a>
+        <a href="./login.html">Login</a>
+      </div>
     </footer>
     <script src="./../js/index.js"></script>
   </body>
