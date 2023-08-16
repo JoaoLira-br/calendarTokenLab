@@ -1,9 +1,9 @@
 <?php 
-include 'classes/User.php';
+
 
 class Calendar {
     public int $user_id;
-    public array $events;
+    public array $events; //? is array the correct data type?
 
     function __construct(int $user_id,
     array $events){

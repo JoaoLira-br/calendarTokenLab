@@ -1,3 +1,7 @@
+<?php
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -124,8 +128,8 @@
     </main>
     <footer>
       <div id="register">
-        <a href="./signup.html">Signup</a>
-        <a href="./login.html">Login</a>
+        <a href="signup.php">Signup</a>
+        <a href="./login.php">Login</a>
       </div>
     </footer>
     <script src="./../js/index.js"></script>

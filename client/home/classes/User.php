@@ -4,8 +4,9 @@ class User {
     public string $username;
     public string $email;
     private string $password;
-    public int user_id
+    public int $user_id;
     public Calendar $calendar;
+    
 
     public function __construct(
         string $username, 
@@ -17,6 +18,7 @@ class User {
             $this -> password = $password;
             //todo: set user`s id to get user id count from server and increment it
             $this -> calendar = $calendar;
+ 
             
                            }
     
