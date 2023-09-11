@@ -11,22 +11,72 @@ $errors = ['name' => '',
 $message = '';
 $redirectToPage = '';
 
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
-  //Validation filters
-  //Would need to check if there is a name or email in the server already
-  $validation_filters['name']['filter'] = FILTER_VALIDATE_REGEXP;
-  $validation_filters['name']['options']['regexp'] = '/^[A-z0-9]{2,10}$/';
-  $validation_filters['email']['filter'] = FILTER_VALIDATE_EMAIL;
+/**
+ * Creates an array of validation filters, including filters for name, email, and password
+ * @return array of validation filters
+ */
+function createValidationFilters(): array {
+    $validation_filters = [];
+    //todo: Would need to check if there is a name or email in the server already
+    $validation_filters['name']['filter'] = FILTER_VALIDATE_REGEXP;
+    $validation_filters['name']['options']['regexp'] = '/^[A-z0-9]{2,10}$/';
 
-  $validation_filters['password']['filter'] = FILTER_VALIDATE_REGEXP;
-  $validation_filters['password']['options']['regexp'] = 
-  '/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[A-Za-z0-9]{8,}$/';
+    $validation_filters['email']['filter'] = FILTER_VALIDATE_EMAIL;
+
+    $validation_filters['password']['filter'] = FILTER_VALIDATE_REGEXP;
+    $validation_filters['password']['options']['regexp'] =
+        '/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[A-Za-z0-9]{8,}$/';
+
+
+    return $validation_filters;
+}
+
+/**
+ * Creates an array of errors for name, email, and password
+ * @param $user array of pre-validated user data
+ * @return array of errors
+ */
+function createErrorMessages(array $user): array
+{
+    $errors['name'] = $user['name'] ? '' : 'Username must be between 2 to 10 characters';
+    $errors['email'] = $user['email'] ? '' : 'Must follow email formatting';
+    $errors['password'] = $user['password'] ? '' : 'Password must have at least 8 characters, one lowercase and uppercase letter, and a number';
+    $errors['password-confirmation'] = $user['password'] === $user['password-confirmation'] ? '' : 'Passwords do not match';
+    return $errors;
+}
+
+/**
+ * Creates an array of sanitized user data for security purposes
+ * @param $user array of pre-validated user data
+ * @return array of sanitized user data
+ */
+function createSanitizedUsed(array $user): array
+{
+    $sanitizedUser['name'] = filter_var($user['name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $sanitizedUser['email'] = filter_var($user['email'], FILTER_SANITIZE_EMAIL);
+    $sanitizedUser['password'] = filter_var($user['password'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    return $sanitizedUser;
+}
+
+/*
+ * Sends the sanitized user data to the database
+ * @param $sanitizedUser array of sanitized user data
+ * @return void
+ */
+function sendToDatabase(array $sanitizedUser): void
+{
+
+}
+
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    echo '<pre> POST </pre>';
+  //Validation filters
+    $validation_filters = createValidationFilters();
 
   $user = filter_input_array(INPUT_POST, $validation_filters);
 
-  $errors['name'] = $user['name'] ? '' : 'Username must be between 2 to 10 characters';
-  $errors['email'] = $user['email'] ? '' : 'Must follow email formatting';
-  $errors['password'] = $user['password'] ? '' : 'Password must have at least 8 characters, one lowercase and uppercase letter, and a number';
+  $errors = createErrorMessages($user);
+
   $invalid = implode($errors);
 
   if($invalid){
@@ -37,12 +87,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $redirectToPage = 'index.php';
     //TODO: here redirectToPage users
   }
-
-  $user['name'] = filter_var($user['name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-  $user['email'] = filter_var($user['email'], FILTER_SANITIZE_EMAIL);
-  $user['password'] = filter_var($user['password'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-
+    $sanitizedUser = createSanitizedUsed($user);
 }
 
 ?>
@@ -64,7 +109,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
       <div class="wrapper-signup">
         <h1>Signup</h1>
         <?= $message ?>
-        <form action="<?php $redirectToPage ?>" method="POST">
+        <form action="<?= $redirectToPage ?>" method="POST">
           <div class="div-name">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" />
@@ -87,9 +132,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
               id="password-confirmation"
               name="password-confirmation"
             />
+              <span class="error"><?= $errors['password-confirmation'] ?></span>
           </div>
           <div class="div-submit">
             <button id="btn-sign-up">Sign Up</button>
+              <p><?= var_dump($sanitizedUser) ?></p>
+              <p><?= var_dump($redirectToPage) ?></p>
           </div>
         </form>
       </div>
