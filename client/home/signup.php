@@ -1,15 +1,27 @@
 
-<?php 
+<?php
+include './../../path.php';
+require SERVER_ROOT . '/db_connection.php';
+require PROJECT_ROOT . '/errorHandler.php';
+
+
 $user = ['name' => '',
          'email' => '',
-         'password' => ''
+         'password' => '',
+            'password-confirmation' => ''
 ];
 $errors = ['name' => '',
            'email' => '',
-           'password' => ''
+           'password' => '',
+            'password-confirmation' => ''
 ];
-$message = '';
-$redirectToPage = '';
+
+
+
+
+
+
+
 
 /**
  * Creates an array of validation filters, including filters for name, email, and password
@@ -25,6 +37,9 @@ function createValidationFilters(): array {
 
     $validation_filters['password']['filter'] = FILTER_VALIDATE_REGEXP;
     $validation_filters['password']['options']['regexp'] =
+        '/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[A-Za-z0-9]{8,}$/';
+    $validation_filters['password-confirmation']['filter'] = FILTER_VALIDATE_REGEXP;
+    $validation_filters['password-confirmation']['options']['regexp'] =
         '/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[A-Za-z0-9]{8,}$/';
 
 
@@ -65,29 +80,49 @@ function createSanitizedUsed(array $user): array
  */
 function sendToDatabase(array $sanitizedUser): void
 {
+    global $pdo;
+    //check if user is already in users table\
+    $sql = 'SELECT * FROM users WHERE Username = :Username';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['Username' => $sanitizedUser['name']]);
+    $user = $stmt->fetch();
+    if ($user) {
+        echo 'User already exists';
+        $errors['name'] = 'User with name' . $user . 'already exists';
+        return;
+    } else {
+        echo 'User does not exist';
+        $sanitizedUser['password'] = password_hash($sanitizedUser['password'], PASSWORD_DEFAULT);
+        $sql = 'INSERT INTO users (Username, Email, Password) VALUES (:name, :email, :password)';
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($sanitizedUser);
+        $redirectToPage = 'index.php';
+    }
 
 }
 
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo '<pre> POST </pre>';
-  //Validation filters
+    //Validation filters
     $validation_filters = createValidationFilters();
+    var_dump($_POST);
+    var_dump($user);
 
-  $user = filter_input_array(INPUT_POST, $validation_filters);
+    $user = filter_input_array(INPUT_POST, $validation_filters);
+    var_dump($user);
+    $errors = createErrorMessages($user);
 
-  $errors = createErrorMessages($user);
+    $invalid = implode($errors);
 
-  $invalid = implode($errors);
-
-  if($invalid){
-    $message = 'Please correct the following errors:';
-    $redirectToPage = 'signup.php';
-  } else {
-    $message = 'Your data was valid!';
-    $redirectToPage = 'index.php';
-    //TODO: here redirectToPage users
-  }
-    $sanitizedUser = createSanitizedUsed($user);
+    if ($invalid) {
+        $message = 'Please correct the following errors:';
+        $redirectToPage = 'signup.php';
+    } else {
+        $message = 'Your data was valid!';
+        $redirectToPage = 'index.php';
+        $sanitizedUser = createSanitizedUsed($user);
+        checkDatabase($sanitizedUser);
+    }
 }
 
 ?>
@@ -136,8 +171,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
           </div>
           <div class="div-submit">
             <button id="btn-sign-up">Sign Up</button>
-              <p><?= var_dump($sanitizedUser) ?></p>
-              <p><?= var_dump($redirectToPage) ?></p>
+              <br /><br />
+              <a href="login.php">Already Have an account?</a>
+
           </div>
         </form>
       </div>

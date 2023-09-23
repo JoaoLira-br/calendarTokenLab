@@ -1,0 +1,2 @@
+Error: [2] Undefined variable $sanitizedUser - C:\xampp\htdocs\projects\calendarTokenLab\client\home\login.php:152
+{"errno":2,"errstr":"Undefined variable $sanitizedUser","errfile":"C:\\xampp\\htdocs\\projects\\calendarTokenLab\\client\\home\\login.php","errline":152}

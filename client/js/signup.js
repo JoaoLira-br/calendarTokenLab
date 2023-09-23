@@ -1,1 +1,0 @@
-btnSignup = document.getElementById()

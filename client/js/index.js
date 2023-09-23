@@ -1,7 +1,10 @@
-//note:array de eventos vai estar em formato de string ao inves de objetos. Portanto precisa parsar com JSON.
-//note: local storage e preferivel (entre cookies e session storage) pois permite que a info do usuario nunca expire(nao perder eventos salvos). e funcionam iguais como um JSON object(key, value)
-// let dateSchedule =
+/*
+todo: Clean commentary hell
+ */
 
+/*
+ todo: FETCH DATE EVENTS WITH AJAX REQUEST TO PHP FILE, SET calendar VAR TO AJAX RESPONSE
+ */
 let calendar = localStorage.getItem("calendar")
   ? JSON.parse(localStorage.getItem("calendar"))
   : [];
@@ -30,6 +33,10 @@ const diasDaSemana = [
   "Sábado",
 ];
 
+/*
+todo: Leverage JQUERY to clean this mess of constants up to line 79.
+group constants by element arrays
+ */
 const body = document.querySelector("body");
 const beeScheme = document.getElementById("beeScheme");
 const whiteBlueScheme = document.getElementById("whiteBlueScheme");
@@ -142,6 +149,9 @@ function load() {
         blocoDeDia.id = "diaAtual";
       }
 
+      /*
+       todo: FETCH DATE EVENTS FROM AJAX
+       */
       let dateEvents = calendar.find((e) => e.date === dateString)
         ? calendar.find((e) => e.date === dateString).dateEvents
         : null;
@@ -288,6 +298,8 @@ function salvarEvento() {
       end: me_inputEventoFim.value,
     };
 
+
+    
     const dateEvents = calendar.find((e) => e.date === diaClicado).dateEvents;
 
     //filter and push
