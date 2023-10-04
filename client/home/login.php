@@ -1,17 +1,26 @@
 <?php
 include './../../path.php';
+include './includes/sessions.php';
 require SERVER_ROOT . '/db_connection.php';
 require PROJECT_ROOT . '/errorHandler.php';
+
+if ($logged_in) {                              // If already logged in
+    header('Location: account.php');           // Redirect to account page
+    exit;                                      // Stop further code running
+}
 
 $user = ['name' => '',
     'email' => '',
     'password' => ''
 ];
+
 $errors = [
     'email' => '',
     'password' => ''
 ];
-$redirectToPage = 'login.php';
+
+
+
 
 
 
@@ -66,16 +75,18 @@ function createSanitizedUsed(array $user): array
 function checkDatabase(array $sanitizedUser): bool
 {
     global $pdo;
-    //check if user is already in users table\
+    //check if user is already in users table
     $sql = 'SELECT * FROM users WHERE Email = :Email';
     $stmt = $pdo->prepare($sql);
     $stmt->execute(['Email' => $sanitizedUser['email']]);
     $user = $stmt->fetch();
-    if ($user) {
-        echo 'User exists';
+    var_error_log($user);
+    var_error_log();
+    if ($user && password_verify($sanitizedUser['password'], $user['Password'])) {
         return true;
     } else {
-        echo 'User does not exist';
+        echo 'Please verify that your email or password are correct';
+
     }
 return false;
 }
@@ -100,6 +111,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $message = 'Your data was valid!';
         $sanitizedUser = createSanitizedUsed($user);
+        if(checkDatabase($sanitizedUser)){
+            login();
+            header('Location: index.php');
+        }else {
+            header('Location: login.php') ;
+        }
         checkDatabase($sanitizedUser) ? header('Location: index.php') : header('Location: login.php') ;
 
 
@@ -148,9 +165,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
       </div>
     </main>
     <footer>
-        <p><?= $redirectToPage?></p>
-        <p><?= var_dump($sanitizedUser) ?></p>
-        <p><?= var_dump(__DIR__)?></p>
+
 
 
     </footer>

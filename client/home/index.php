@@ -1,5 +1,6 @@
 <?php
-
+require 'includes/sessions.php';
+require_login($logged_in);
 ?>
 
 <!DOCTYPE html>
