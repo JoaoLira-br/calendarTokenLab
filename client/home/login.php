@@ -1,15 +1,15 @@
 <?php
 include './../../path.php';
-include './includes/sessions.php';
+include './includes/calendar_sessions.php';
 require SERVER_ROOT . '/db_connection.php';
 require PROJECT_ROOT . '/errorHandler.php';
 
 if ($logged_in) {                              // If already logged in
-    header('Location: account.php');           // Redirect to account page
+    header('Location: index.php');           // Redirect to account page
     exit;                                      // Stop further code running
 }
 
-$user = ['name' => '',
+$users = ['name' => '',
     'email' => '',
     'password' => ''
 ];
@@ -19,7 +19,7 @@ $errors = [
     'password' => ''
 ];
 
-
+$name = null;
 
 
 
@@ -31,14 +31,11 @@ $errors = [
  */
 function createValidationFilters(): array {
     $validation_filters = [];
-
     $validation_filters['email']['filter'] = FILTER_VALIDATE_EMAIL;
-
     $validation_filters['password']['filter'] = FILTER_VALIDATE_REGEXP;
+
     $validation_filters['password']['options']['regexp'] =
         '/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[A-Za-z0-9]{8,}$/';
-
-
     return $validation_filters;
 }
 
@@ -74,15 +71,15 @@ function createSanitizedUsed(array $user): array
  */
 function checkDatabase(array $sanitizedUser): bool
 {
-    global $pdo;
+    global $pdo, $user_id;
     //check if user is already in users table
-    $sql = 'SELECT * FROM users WHERE Email = :Email';
+    $sql = 'SELECT * FROM users WHERE Username = :Username AND Email = :Email';
     $stmt = $pdo->prepare($sql);
-    $stmt->execute(['Email' => $sanitizedUser['email']]);
-    $user = $stmt->fetch();
-    var_error_log($user);
-    var_error_log();
-    if ($user && password_verify($sanitizedUser['password'], $user['Password'])) {
+    $stmt->execute(['Username'=> $sanitizedUser['email'],'Email' => $sanitizedUser['email']]);
+    $db_user = $stmt->fetch();
+    var_obj_log($db_user);
+    if ($db_user && password_verify($sanitizedUser['password'], $db_user['Password'])) {
+        $user_id = $db_user['ID'];
         return true;
     } else {
         echo 'Please verify that your email or password are correct';
@@ -92,7 +89,6 @@ return false;
 }
 
 
-//TODO: GET or POST? get is leading to NULL values
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     //Validation filters
     $validation_filters = createValidationFilters();
@@ -111,15 +107,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $message = 'Your data was valid!';
         $sanitizedUser = createSanitizedUsed($user);
+        /*
+         * todo: send user_id to query string
+         */
         if(checkDatabase($sanitizedUser)){
-            login();
+            user_login($user_id);
             header('Location: index.php');
-        }else {
-            header('Location: login.php') ;
         }
-        checkDatabase($sanitizedUser) ? header('Location: index.php') : header('Location: login.php') ;
-
-
     }
 }
 

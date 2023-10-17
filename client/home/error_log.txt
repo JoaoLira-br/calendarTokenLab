@@ -1,89 +1,334 @@
+bool(false)
+
+array(4) {
+  ["name"]=>
+  string(3) "jao"
+  ["email"]=>
+  string(15) "dummy@gmail.com"
+  ["password"]=>
+  string(8) "Juao1310"
+  ["password-confirmation"]=>
+  string(8) "Juao1310"
+}
+
+testbool(false)
+
+
+array(4) {
+  ["name"]=>
+  string(8) "juao1013"
+  ["email"]=>
+  string(15) "dummy@gmail.com"
+  ["password"]=>
+  bool(false)
+  ["password-confirmation"]=>
+  bool(false)
+}
+
+array(4) {
+  ["name"]=>
+  string(8) "Juao1013"
+  ["email"]=>
+  string(15) "dummy@gmail.com"
+  ["password"]=>
+  string(8) "Juao1013"
+  ["password-confirmation"]=>
+  string(8) "Juao1013"
+}
+
+bool(false)
+
 {
     "errno": 2,
-    "errstr": "Undefined variable $sanitizedUser",
-    "errfile": "C:\\xampp\\htdocs\\projects\\calendarTokenLab\\client\\home\\login.php",
-    "errline": 154
+    "errstr": "Trying to access array offset on value of type bool",
+    "errfile": "C:\\xampp\\htdocs\\projects\\calendarTokenLab\\client\\home\\signup.php",
+    "errline": 93
 }
+array(4) {
+  ["name"]=>
+  string(8) "Joao1310"
+  ["email"]=>
+  string(15) "dummy@gmail.com"
+  ["password"]=>
+  string(8) "Joao1310"
+  ["password-confirmation"]=>
+  string(8) "Joao1310"
+}
+
+bool(false)
+
+{
+    "errno": 2,
+    "errstr": "Trying to access array offset on value of type bool",
+    "errfile": "C:\\xampp\\htdocs\\projects\\calendarTokenLab\\client\\home\\signup.php",
+    "errline": 93
+}
+array(4) {
+  ["name"]=>
+  string(8) "Joao1310"
+  ["email"]=>
+  string(15) "dummy@gmail.com"
+  ["password"]=>
+  string(8) "Joao1310"
+  ["password-confirmation"]=>
+  string(8) "Joao1310"
+}
+
+array(4) {
+  ["ID"]=>
+  int(5)
+  ["Username"]=>
+  string(8) "Joao1310"
+  ["Email"]=>
+  string(15) "dummy@gmail.com"
+  ["Password"]=>
+  string(60) "$2y$10$fO50OkWK1cojxhFGKlf4y.2AmzwKrLQ8nAtzJC0W0kJOr8y9V9R1C"
+}
+
+{
+    "errno": 2,
+    "errstr": "Array to string conversion",
+    "errfile": "C:\\xampp\\htdocs\\projects\\calendarTokenLab\\client\\home\\signup.php",
+    "errline": 96
+}
+array(4) {
+  ["name"]=>
+  string(8) "Juao1310"
+  ["email"]=>
+  string(15) "dummy@gmail.com"
+  ["password"]=>
+  string(8) "Juao1310"
+  ["password-confirmation"]=>
+  string(8) "Juao1310"
+}
+
+array(4) {
+  ["ID"]=>
+  int(3)
+  ["Username"]=>
+  string(8) "Juao1310"
+  ["Email"]=>
+  string(15) "dummy@gmail.com"
+  ["Password"]=>
+  string(60) "$2y$10$eeVXmMCBuAiF0PGuISw6MuVk/YJumMP/4XLuZIHnLGQmQFxzoqZtW"
+}
+
+array(4) {
+  ["name"]=>
+  string(8) "Juao1310"
+  ["email"]=>
+  string(15) "dummy@gmail.com"
+  ["password"]=>
+  string(8) "Juao1310"
+  ["password-confirmation"]=>
+  string(8) "Juao1310"
+}
+
+array(4) {
+  ["ID"]=>
+  int(3)
+  ["Username"]=>
+  string(8) "Juao1310"
+  ["Email"]=>
+  string(15) "dummy@gmail.com"
+  ["Password"]=>
+  string(60) "$2y$10$eeVXmMCBuAiF0PGuISw6MuVk/YJumMP/4XLuZIHnLGQmQFxzoqZtW"
+}
+
+array(4) {
+  ["name"]=>
+  string(8) "Juao1310"
+  ["email"]=>
+  string(15) "dummy@gmail.com"
+  ["password"]=>
+  string(8) "Juao1310"
+  ["password-confirmation"]=>
+  string(8) "Juao1310"
+}
+
+array(4) {
+  ["ID"]=>
+  int(3)
+  ["Username"]=>
+  string(8) "Juao1310"
+  ["Email"]=>
+  string(15) "dummy@gmail.com"
+  ["Password"]=>
+  string(60) "$2y$10$eeVXmMCBuAiF0PGuISw6MuVk/YJumMP/4XLuZIHnLGQmQFxzoqZtW"
+}
+
+{
+    "errno": 2,
+    "errstr": "Undefined array key \"REQUEST_METHOD\"",
+    "errfile": "C:\\xampp\\htdocs\\projects\\calendarTokenLab\\client\\home\\signup.php",
+    "errline": 107
+}
+{
+    "errno": 2,
+    "errstr": "Undefined array key \"REQUEST_METHOD\"",
+    "errfile": "C:\\xampp\\htdocs\\projects\\calendarTokenLab\\client\\home\\signup.php",
+    "errline": 107
+}
+{
+    "errno": 2,
+    "errstr": "Undefined array key \"REQUEST_METHOD\"",
+    "errfile": "C:\\xampp\\htdocs\\projects\\calendarTokenLab\\client\\home\\signup.php",
+    "errline": 107
+}
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small>
+<b>array</b> <i>(size=4)</i>
+  'name' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Jiao1310'</font> <i>(length=8)</i>
+  'email' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'dummy@gmail.com'</font> <i>(length=15)</i>
+  'password' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Jiao1310'</font> <i>(length=8)</i>
+  'password-confirmation' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Jiao1310'</font> <i>(length=8)</i>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small><small>boolean</small> <font color='#75507b'>false</font>
+</pre>
+{
+    "errno": 2,
+    "errstr": "Undefined variable $user_id",
+    "errfile": "C:\\xampp\\htdocs\\projects\\calendarTokenLab\\client\\home\\includes\\sessions.php",
+    "errline": 10
+}
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small>
+<b>array</b> <i>(size=4)</i>
+  'name' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Jhao1310'</font> <i>(length=8)</i>
+  'email' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'dummy@gmail.com'</font> <i>(length=15)</i>
+  'password' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Jhao1310'</font> <i>(length=8)</i>
+  'password-confirmation' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Jhao1310'</font> <i>(length=8)</i>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small><small>boolean</small> <font color='#75507b'>false</font>
+</pre>
+{
+    "errno": 2,
+    "errstr": "Undefined variable $user_id",
+    "errfile": "C:\\xampp\\htdocs\\projects\\calendarTokenLab\\client\\home\\includes\\sessions.php",
+    "errline": 10
+}
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small>
+<b>array</b> <i>(size=4)</i>
+  'name' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Piao1310'</font> <i>(length=8)</i>
+  'email' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'dummy@gmail.com'</font> <i>(length=15)</i>
+  'password' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Piao1310'</font> <i>(length=8)</i>
+  'password-confirmation' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Piao1310'</font> <i>(length=8)</i>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small><small>boolean</small> <font color='#75507b'>false</font>
+</pre>
+{
+    "errno": 2,
+    "errstr": "Undefined variable $user_id",
+    "errfile": "C:\\xampp\\htdocs\\projects\\calendarTokenLab\\client\\home\\includes\\sessions.php",
+    "errline": 10
+}
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small>
+<b>array</b> <i>(size=4)</i>
+  'name' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Jpao1310'</font> <i>(length=8)</i>
+  'email' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'dummy@gmail.com'</font> <i>(length=15)</i>
+  'password' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Jpao1310'</font> <i>(length=8)</i>
+  'password-confirmation' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Jpao1310'</font> <i>(length=8)</i>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small><small>boolean</small> <font color='#75507b'>false</font>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small>
+<b>array</b> <i>(size=4)</i>
+  'name' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Jtao1310'</font> <i>(length=8)</i>
+  'email' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'dummy@gmail.com'</font> <i>(length=15)</i>
+  'password' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Jtao1310'</font> <i>(length=8)</i>
+  'password-confirmation' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Jtao1310'</font> <i>(length=8)</i>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small><small>boolean</small> <font color='#75507b'>false</font>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small>
+<b>array</b> <i>(size=4)</i>
+  'name' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'J0ao1310'</font> <i>(length=8)</i>
+  'email' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'dummy@gmail.com'</font> <i>(length=15)</i>
+  'password' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'J0ao1310'</font> <i>(length=8)</i>
+  'password-confirmation' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'J0ao1310'</font> <i>(length=8)</i>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small><small>boolean</small> <font color='#75507b'>false</font>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small>
+<b>array</b> <i>(size=4)</i>
+  'name' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Jrao1310'</font> <i>(length=8)</i>
+  'email' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'dummy@gmail.com'</font> <i>(length=15)</i>
+  'password' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Jrao1310'</font> <i>(length=8)</i>
+  'password-confirmation' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Jrao1310'</font> <i>(length=8)</i>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small><small>boolean</small> <font color='#75507b'>false</font>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small>
+<b>array</b> <i>(size=4)</i>
+  'name' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'J6ao1310'</font> <i>(length=8)</i>
+  'email' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'dummy@gmail.com'</font> <i>(length=15)</i>
+  'password' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'J6ao1310'</font> <i>(length=8)</i>
+  'password-confirmation' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'J6ao1310'</font> <i>(length=8)</i>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small><small>boolean</small> <font color='#75507b'>false</font>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small>
+<b>array</b> <i>(size=4)</i>
+  'name' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'J4ao1310'</font> <i>(length=8)</i>
+  'email' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'dummy@gmail.com'</font> <i>(length=15)</i>
+  'password' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'J4ao1310'</font> <i>(length=8)</i>
+  'password-confirmation' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'J4ao1310'</font> <i>(length=8)</i>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small><small>boolean</small> <font color='#75507b'>false</font>
+</pre>
 {
     "errno": 2,
     "errstr": "Undefined array key \"name\"",
     "errfile": "C:\\xampp\\htdocs\\projects\\calendarTokenLab\\client\\home\\login.php",
-    "errline": 55
+    "errline": 61
 }
-array(4) {
-  ["ID"]=>
-  int(2)
-  ["Username"]=>
-  string(5) "jlira"
-  ["Email"]=>
-  string(20) "lira440440@gmail.com"
-  ["Password"]=>
-  string(60) "$2y$10$GOUd/x.LDhC1.yiTY59yves.Bi/BjCdRIFq8K/XLMMiQ1DBHkMge6"
-}
-
-NULL
-
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small><small>boolean</small> <font color='#75507b'>false</font>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small>
+<b>array</b> <i>(size=4)</i>
+  'name' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'J7ao1310'</font> <i>(length=8)</i>
+  'email' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'d7mmy@gmail.com'</font> <i>(length=15)</i>
+  'password' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'J7ao1310'</font> <i>(length=8)</i>
+  'password-confirmation' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'J7ao1310'</font> <i>(length=8)</i>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small><small>boolean</small> <font color='#75507b'>false</font>
+</pre>
 {
     "errno": 2,
     "errstr": "Undefined array key \"name\"",
     "errfile": "C:\\xampp\\htdocs\\projects\\calendarTokenLab\\client\\home\\login.php",
-    "errline": 64
+    "errline": 61
 }
-array(4) {
-  ["ID"]=>
-  int(2)
-  ["Username"]=>
-  string(5) "jlira"
-  ["Email"]=>
-  string(20) "lira440440@gmail.com"
-  ["Password"]=>
-  string(60) "$2y$10$GOUd/x.LDhC1.yiTY59yves.Bi/BjCdRIFq8K/XLMMiQ1DBHkMge6"
-}
-
-NULL
-
-array(4) {
-  ["ID"]=>
-  int(2)
-  ["Username"]=>
-  string(5) "jlira"
-  ["Email"]=>
-  string(20) "lira440440@gmail.com"
-  ["Password"]=>
-  string(60) "$2y$10$GOUd/x.LDhC1.yiTY59yves.Bi/BjCdRIFq8K/XLMMiQ1DBHkMge6"
-}
-
-NULL
-
-{
-    "errno": 2,
-    "errstr": "Undefined array key \"name\"",
-    "errfile": "C:\\xampp\\htdocs\\projects\\calendarTokenLab\\client\\home\\login.php",
-    "errline": 64
-}
-array(4) {
-  ["ID"]=>
-  int(2)
-  ["Username"]=>
-  string(5) "jlira"
-  ["Email"]=>
-  string(20) "lira440440@gmail.com"
-  ["Password"]=>
-  string(60) "$2y$10$GOUd/x.LDhC1.yiTY59yves.Bi/BjCdRIFq8K/XLMMiQ1DBHkMge6"
-}
-
-NULL
-
-array(4) {
-  ["ID"]=>
-  int(2)
-  ["Username"]=>
-  string(5) "jlira"
-  ["Email"]=>
-  string(20) "lira440440@gmail.com"
-  ["Password"]=>
-  string(60) "$2y$10$GOUd/x.LDhC1.yiTY59yves.Bi/BjCdRIFq8K/XLMMiQ1DBHkMge6"
-}
-
-NULL
-
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small><small>boolean</small> <font color='#75507b'>false</font>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small>
+<b>array</b> <i>(size=4)</i>
+  'name' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'J8ao1310'</font> <i>(length=8)</i>
+  'email' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'d8mmy@gmail.com'</font> <i>(length=15)</i>
+  'password' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'J8ao1310'</font> <i>(length=8)</i>
+  'password-confirmation' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'J8ao1310'</font> <i>(length=8)</i>
+</pre>
+<pre class='xdebug-var-dump' dir='ltr'>
+<small>C:\xampp\htdocs\projects\calendarTokenLab\errorHandler.php:28:</small><small>boolean</small> <font color='#75507b'>false</font>
+</pre>

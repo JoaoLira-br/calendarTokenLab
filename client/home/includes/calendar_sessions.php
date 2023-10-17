@@ -1,14 +1,18 @@
 <?php
 session_start();                                         // Start/renew session
-$logged_in = $_SESSION['logged_in'] ?? false;            // Is user logged in?
+$logged_in = $_SESSION['logged_in'] ?? false;
+/** @var TYPE_NAME $user_id */
+$user_id = $_SESSION['user_id'] ?? null;
 
-function login()                                         // Remember user passed login
+function user_login($user_id)                                         // Remember user passed login
 {
+
     session_regenerate_id(true);                         // Update session id
-    $_SESSION['logged_in'] = true;                       // Set logged_in key to true
+    $_SESSION['logged_in'] = true;
+    $_SESSION['user_id'] = $user_id;
 }
 
-function logout()                                        // Terminate the session
+function user_logout()                                        // Terminate the session
 {
     $_SESSION = [];                                      // Clear contents of array
 
@@ -19,7 +23,7 @@ function logout()                                        // Terminate the sessio
     session_destroy();                                   // Delete session file
 }
 
-function require_login($logged_in)                       // Check if user logged in
+function require_user_login($logged_in)                       // Check if user logged in
 {
     if ($logged_in == false) {                           // If not logged in
         header('Location: login.php');                   // Send to login page

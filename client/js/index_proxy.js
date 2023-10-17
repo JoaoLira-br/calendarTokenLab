@@ -8,9 +8,41 @@ todo: Clean commentary hell
 /*
 FETCH USER EVENTS FROM USER ID
  */
+let user_id = null;
+
 let calendar = localStorage.getItem("calendar")
   ? JSON.parse(localStorage.getItem("calendar"))
   : [];
+
+$.post('/client/home/index.php', {
+}, function(response){
+  if(response.status === 'success'){
+    user_id = response.user_id;
+  } else {
+    console.log('Error fetching user id');
+  }
+}).fail(function(jqXHR, textStatus, errorThrown) {
+  console.error('Fetch Error:', errorThrown);
+});
+
+
+if(user_id){
+  $.post('/server/proxy.php', {
+    action: 'fetch_events',
+    user_id: user_id
+  }, function(data){
+    if(data.events){
+        calendar = data.events;
+        localStorage.setItem("calendar", JSON.stringify(calendar));
+    }
+
+  }, 'json').fail(function(jqXHR, textStatus, errorThrown){
+
+  });
+}
+
+
+
 
 
 // let eventos = localStorage.getItem("eventos")
@@ -161,6 +193,9 @@ function load() {
       let dateEvents = calendar.find((e) => e.date === dateString)
         ? calendar.find((e) => e.date === dateString).dateEvents
         : null;
+
+
+
 
       fillEventBlocks(dateEvents, dateString, blocoDeDia);
       //
@@ -344,7 +379,7 @@ function editarEvento() {
 function deletarEvento() {
   //TODO: DELETE event where date = dia clicado
   // eventos = eventos.filter((e) => e.date !== clicado);
-
+  
   const dateEvents = calendar.find((e) => e.date === diaClicado).dateEvents;
   calendar.find((e) => e.date === diaClicado).dateEvents = dateEvents.filter(
     (e) => e !== eventoClicado

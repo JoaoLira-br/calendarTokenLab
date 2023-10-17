@@ -1,6 +1,7 @@
 
 <?php
 include './../../path.php';
+include './includes/calendar_sessions.php';
 require SERVER_ROOT . '/db_connection.php';
 require PROJECT_ROOT . '/errorHandler.php';
 
@@ -78,38 +79,40 @@ function createSanitizedUsed(array $user): array
  * @param $sanitizedUser array of sanitized user data
  * @return void
  */
-function sendToDatabase(array $sanitizedUser): void
+function sendToDatabase(array $sanitizedUser): int
 {
-    global $pdo;
     //check if user is already in users table\
+    global $pdo, $user_id;
+
     $sql = 'SELECT * FROM users WHERE Username = :Username';
+
     $stmt = $pdo->prepare($sql);
     $stmt->execute(['Username' => $sanitizedUser['name']]);
-    $user = $stmt->fetch();
-    if ($user) {
-        echo 'User already exists';
-        $errors['name'] = 'User with name' . $user . 'already exists';
-        return;
+    $db_user = $stmt->fetch();
+    var_obj_log($db_user);
+
+
+    if ($db_user) {
+        $errors['name'] = 'User with name' . $db_user['Username'] . 'already exists';
+        return false;
     } else {
-        echo 'User does not exist';
         $sanitizedUser['password'] = password_hash($sanitizedUser['password'], PASSWORD_DEFAULT);
         $sql = 'INSERT INTO users (Username, Email, Password) VALUES (:name, :email, :password)';
         $stmt = $pdo->prepare($sql);
         $stmt->execute($sanitizedUser);
-        $redirectToPage = 'index.php';
+        $user_id = $pdo->lastInsertId();
+        return true;
     }
-
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo '<pre> POST </pre>';
     //Validation filters
     $validation_filters = createValidationFilters();
-    var_dump($_POST);
-    var_dump($user);
+
 
     $user = filter_input_array(INPUT_POST, $validation_filters);
-    var_dump($user);
+    var_obj_log($user);
     $errors = createErrorMessages($user);
 
     $invalid = implode($errors);
@@ -119,9 +122,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $redirectToPage = 'signup.php';
     } else {
         $message = 'Your data was valid!';
-        $redirectToPage = 'index.php';
         $sanitizedUser = createSanitizedUsed($user);
-        checkDatabase($sanitizedUser);
+        if(sendToDatabase($sanitizedUser, $pdo, $user_id)){
+
+            user_login($user_id);
+            header('Location: index.php');
+        };
+        error_log('User was not sent to database');
+
+//        if(sendToDatabase($sanitizedUser)){
+//            login();
+//            header('Location: index.php');
+//        }else
+//        $sanitizedUser = createSanitizedUsed($user);
+//        checkDatabase($sanitizedUser);
     }
 }
 
@@ -144,7 +158,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
       <div class="wrapper-signup">
         <h1>Signup</h1>
         <?= $message ?>
-        <form action="<?= $redirectToPage ?>" method="POST">
+        <form action="./signup.php" method="POST">
           <div class="div-name">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" />

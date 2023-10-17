@@ -1,6 +1,24 @@
 <?php
-require 'includes/sessions.php';
-require_login($logged_in);
+require 'includes/calendar_sessions.php';
+include './../../path.php';
+include PROJECT_ROOT . '/errorHandler.php';
+
+
+require_user_login($logged_in);
+
+$message = $user_id ? '<p>' . $user_id .  ' </p>' : '<p> no user id found </p>';
+
+$response = [
+    'status' => 'success',
+    'message' => 'Logged in successfully',
+    'user_id' => $user_id,  // assuming you have the user_id variable set somewhere
+];
+
+//// Example: After successful login
+echo json_encode($response);
+
+//// Set the header to inform that the response type is JSON
+// Echo the encoded JSON data
 ?>
 
 <!DOCTYPE html>
@@ -16,6 +34,10 @@ require_login($logged_in);
     <main>
       <!-- todo:modals vao servir como popups para adicionar eventos no calendario -->
       <header><h1>Calendar</h1></header>
+        <?= $message ?>
+        <?php var_dump(json_encode($response)) ?>
+        <?= $_SESSION['user_id'] ?>
+
       <div class="wrapper">
         <div id="header">
           <div id="mesAtual"></div>
@@ -133,6 +155,8 @@ require_login($logged_in);
         <a href="./login.php">Login</a>
       </div>
     </footer>
-    <script src="./../js/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="./../js/index_proxy.js"></script>
   </body>
 </html>

@@ -23,7 +23,7 @@ function jsonErrorHandler($errno, $errstr, $errfile, $errline) : void{
 
 }
 
-function var_error_log( $object=null ) : void{
+function var_obj_log($object=null ) : void{
     ob_start();                    // start buffer capture
     var_dump( $object );           // dump the values
     $contents = ob_get_contents(); // put the buffer into a variable
