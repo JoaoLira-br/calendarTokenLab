@@ -14,8 +14,11 @@ $response = [
     'user_id' => $user_id,  // assuming you have the user_id variable set somewhere
 ];
 
+    echo json_encode($response);
+    var_obj_log($response);
+
+
 //// Example: After successful login
-echo json_encode($response);
 
 //// Set the header to inform that the response type is JSON
 // Echo the encoded JSON data
