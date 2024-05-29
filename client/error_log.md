@@ -8,7 +8,7 @@ In /client/home/signup.php
 
 - as in User.php had `include 'classes/Calendar.php';` and Calendar.php had `include 'classes/User.php`. It would enter in an infinite recursion of trying to fetch each others` file I suppose.
 
-- I assumed it was a Path issue when it was double dependecy issue
+- I assumed it was a Path issue when it was double dependency issue
 
 ## new issue: how to include user in calendar? maybe just use unique user_id that points to user?
 
@@ -17,3 +17,9 @@ In /client/home/signup.php
 # Syntax errors, program outline and class implementations not being displayed
 
 - Did not know extension about PHP intelliphense. once installed solved these issues. 
+
+10/17/23
+
+# AJAX NOT WORKING
+
+- 

@@ -103,7 +103,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $message = 'Please correct the following errors:';
         echo $message;
-        var_dump($errors);
     } else {
         $message = 'Your data was valid!';
         $sanitizedUser = createSanitizedUsed($user);

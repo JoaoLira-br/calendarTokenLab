@@ -1,24 +1,23 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require 'includes/calendar_sessions.php';
 include './../../path.php';
 include PROJECT_ROOT . '/errorHandler.php';
+
 
 
 require_user_login($logged_in);
 
 $message = $user_id ? '<p>' . $user_id .  ' </p>' : '<p> no user id found </p>';
 
-$response = [
-    'status' => 'success',
-    'message' => 'Logged in successfully',
-    'user_id' => $user_id,  // assuming you have the user_id variable set somewhere
-];
-
-    echo json_encode($response);
-    var_obj_log($response);
 
 
-//// Example: After successful login
+
+
+// Example: After successful login
 
 //// Set the header to inform that the response type is JSON
 // Echo the encoded JSON data
@@ -35,11 +34,11 @@ $response = [
   </head>
   <body id="body-calendario">
     <main>
-      <!-- todo:modals vao servir como popups para adicionar eventos no calendario -->
+<!--       todo:modals vao servir como popups para adicionar eventos no calendario-->
       <header><h1>Calendar</h1></header>
         <?= $message ?>
-        <?php var_dump(json_encode($response)) ?>
-        <?= $_SESSION['user_id'] ?>
+<!--        --><?php //var_dump(json_encode($response)) ?>
+<!--        --><?php //= $_SESSION['user_id'] ?>
 
       <div class="wrapper">
         <div id="header">
@@ -66,7 +65,6 @@ $response = [
         <div id="semana">
           <div class="dias-da-semana">Domingo</div>
           <div class="dias-da-semana">Segunda</div>
-          <!-- nota formatar nome terca feira -->
           <div class="dias-da-semana">Terça</div>
           <div class="dias-da-semana">Quarta</div>
           <div class="dias-da-semana">Quinta</div>
@@ -112,6 +110,7 @@ $response = [
           placeholder="Titulo do Evento"
           id="me_inputEventoTitulo"
         />
+
         <textarea
           name="inputEventoDescricao"
           cols="20"
@@ -125,7 +124,7 @@ $response = [
             type="time"
             name="InicioEvento"
             id="me_inputEventoInicio"
-          />&nbsp;
+          />&nbsp
           <span>Até: </span>
           <input type="time" name="FimEvento" id="me_inputEventoFim" />
         </div>

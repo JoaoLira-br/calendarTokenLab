@@ -1,13 +1,16 @@
 <?php
 declare(strict_types=1);
+
+use Cassandra\Date;
+
 $errors = ["errno" => "", "errstr" => "", "errfile" => "", "errline" => ""];
 
 error_reporting(E_ALL);
 ini_set("display_errors", "0");
+
 /*
  * log echo to error_log.txt
  */
-
 function standardErrorHandler($errno, $errstr, $errfile, $errline): void
 {
     $message =  "Error: [$errno] $errstr - $errfile:$errline";
@@ -15,12 +18,15 @@ function standardErrorHandler($errno, $errstr, $errfile, $errline): void
 
 }
 function jsonErrorHandler($errno, $errstr, $errfile, $errline) : void{
+
+//    $current_date = new Date('Y-m-d H:i:s');
+//    $errors["date"] = $current_date;
     $errors["errno"] = $errno;
     $errors["errstr"] = $errstr;
     $errors["errfile"] = $errfile;
     $errors["errline"] = $errline;
-    error_log(json_encode($errors, JSON_PRETTY_PRINT) . PHP_EOL, 3, "error_log.txt");
 
+    error_log(json_encode($errors, JSON_PRETTY_PRINT) . PHP_EOL, 3, "error_log.txt");
 }
 
 function var_obj_log($object=null ) : void{

@@ -9,37 +9,55 @@ todo: Clean commentary hell
 FETCH USER EVENTS FROM USER ID
  */
 let user_id = null;
+//
+// let calendar = localStorage.getItem("calendar")
+//   ? JSON.parse(localStorage.getItem("calendar"))
+//   : [];
+let calendar = [];
 
-let calendar = localStorage.getItem("calendar")
-  ? JSON.parse(localStorage.getItem("calendar"))
-  : [];
+// $.post('/client/home/index.php', {
+// }, function(response){
+//   if(response.status === 'success'){
+//     user_id = response.user_id;
+//   } else {
+//     console.log('Error fetching user id');
+//   }
+// }).fail(function(jqXHR, textStatus, errorThrown) {
+//   console.error('Fetch Error:', errorThrown);
+// });
 
-$.post('/client/home/index.php', {
-}, function(response){
-  if(response.status === 'success'){
-    user_id = response.user_id;
+$.post('/calendarTokenLab/server/proxy.php', {
+  action: 'fetch_id'
+}).done(function(data){
+  // If jQuery doesn't automatically parse the JSON response, uncomment the next line:
+  // data = JSON.parse(data);
+
+  if(data && data.user_id){ // Check if data is not null and user_id exists
+    console.log("User ID:", data.user_id);
+    console.log("hello sir");
+    user_id = data.user_id;
   } else {
-    console.log('Error fetching user id');
+    console.error('Invalid response:', data);
   }
 }).fail(function(jqXHR, textStatus, errorThrown) {
   console.error('Fetch Error:', errorThrown);
 });
 
 
-if(user_id){
-  $.post('/server/proxy.php', {
+  $.post('/calendarTokenLab/server/proxy.php', {
     action: 'fetch_events',
     user_id: user_id
   }, function(data){
     if(data.events){
-        calendar = data.events;
-        localStorage.setItem("calendar", JSON.stringify(calendar));
+      calendar = data.events;
+      localStorage.setItem("calendar", JSON.stringify(calendar));
     }
 
   }, 'json').fail(function(jqXHR, textStatus, errorThrown){
 
   });
-}
+
+
 
 
 
@@ -117,6 +135,45 @@ const me_buttonCancelar = document.getElementById("me_buttonCancelar");
 
 //essa funcao abre um popup na tela quando o user clicar em dos blocos de dia do calendario
 
+function convertTimeToMySQLFormat(timeString) {
+  // Check if the time string is null or undefined
+  if (timeString === "") {
+    // You can return a default value, or null, depending on your requirements
+    // For this example, I'm returning null
+    return null;
+  }
+
+  // Split the time string by ":"
+  const parts = timeString.split(":");
+
+  // Check if the time string is in the expected format
+  // if (parts.length !== 2) {
+  //   throw new Error("Invalid time format. Expected HH:MM.");
+  // }
+
+  // Extract the hours and minutes
+  const [hours, minutes] = parts;
+
+  // Return the time in MySQL's TIME format
+  return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:00`;
+}
+
+function convertDateToMySQLFormat(dateString) {
+  // Split the date string by "/"
+  const parts = dateString.split("/");
+
+  // Check if the date string is in the expected format
+  if (parts.length !== 3) {
+    throw new Error("Invalid date format. Expected MM/DD/YYYY.");
+  }
+
+  // Extract the month, day, and year
+  const [month, day, year] = parts;
+
+  // Return the date in MySQL's DATE format
+  return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+}
+
 // a funcao load() serve para preencher e mostrar o calendario, levando em consideracao os eventos, e o mes que se esta
 function load() {
   const dt = new Date();
@@ -166,6 +223,23 @@ function load() {
   /*
     run for each day of the month displayed
   **/
+//   $.ajax({
+//     url: '/calendarTokenLab/server/proxy.php',
+//     type: 'POST',
+//     data: {action: 'fetch_events', user_id: user_id},
+//     dataType: 'json'
+//   }).then(function(response2) {
+//   console.log('Second request successful:', response2);
+//   // This function is called when the second request is successful.
+//   // 'response2' contains the data returned from the second request.
+//   calendar = response2.events;
+//
+// }).catch(function(error) {
+//       // This function is called if any of the requests fail.
+//       // 'error' contains the error information.
+//
+//       console.error('Request failed:', error);
+//     });
   for (let dia = 1; dia <= diasDePreenchimento + diasDoMes; dia++) {
     fillDateBlocks(dia);
   }
@@ -175,6 +249,8 @@ function load() {
 
     // * format of dateString === (local storage) eventos.date
     const dateString = `${mes}/${dia - diasDePreenchimento}/${ano}`;
+
+
 
     if (dia > diasDePreenchimento) {
       blocoDeDia.classList.add("div-dia");
@@ -189,9 +265,10 @@ function load() {
        TODO: SQL FETCH DATE EVENTS FROM USER ID WHERE DATE = datestring
 
        */
+      let dateSchedule = calendar.find((e) => e.date === dateString);
 
-      let dateEvents = calendar.find((e) => e.date === dateString)
-        ? calendar.find((e) => e.date === dateString).dateEvents
+      let dateEvents = dateSchedule
+        ? dateSchedule.dateEvents
         : null;
 
 
@@ -256,6 +333,13 @@ function load() {
   }
 }
 
+/*
+
+ */
+/**
+ * @param {null} date
+ * @param {*} dateEvent
+ */
 function abrirModal(date, dateEvent) {
   diaClicado = date;
   const dateSchedule = calendar.find((e) => e.date === diaClicado);
@@ -282,6 +366,12 @@ function abrirModal(date, dateEvent) {
 function criarEvento() {
   if (inputEventoTitulo.value) {
     inputEventoTitulo.classList.remove("error");
+    console.log(`diaClicado: ${diaClicado}\n`);
+    console.log(`inputInicioValue: ${eventoInicio.value}\n`);
+    console.log(`inputFimValue: ${eventoFim.value}\n`);
+    console.log(`evento: ${calendar}`)
+
+
 
     /*
     TODO: SQL FETCH EVENTS BASED ON DATE
@@ -297,12 +387,16 @@ function criarEvento() {
         /*
         TODO: SQL INSERT INTO dateEvents VALUES title description start end date User id
          */
-        dateSchedule.dateEvents.push({
-          title: inputEventoTitulo.value,
-          description: inputEventoDescricao.value,
-          start: eventoInicio.value,
-          end: eventoFim.value,
-        });
+        const newEvent = {
+            title: inputEventoTitulo.value,
+            description: inputEventoDescricao.value,
+            start: eventoInicio.value,
+            end: eventoFim.value,
+
+
+        }
+
+        dateSchedule.dateEvents.push(newEvent);
       }
     } else {
       /*
@@ -320,6 +414,30 @@ function criarEvento() {
         ],
       });
     }
+    console.log(diaClicado)
+    const mySqlEvent = {
+      title: inputEventoTitulo.value,
+      description: inputEventoDescricao.value,
+      start: eventoInicio.value,
+      end: eventoFim.value,
+      date: diaClicado,
+    }
+
+
+    $.post('/calendarTokenLab/server/proxy.php', {
+      action: 'create_event',
+      user_id: user_id,
+      event: mySqlEvent
+    }).done(function(response){
+      console.log('something')
+      if(response){
+        console.log(response.success)
+      }else{
+        console.log("no response");
+      }
+    }).fail(function(jqXHR, textStatus, errorThrown){
+      console.error('Fetch Error:', errorThrown);
+    });
 
     // localStorage.setItem("eventos", JSON.stringify(eventos));
     localStorage.setItem("calendar", JSON.stringify(calendar));
@@ -337,7 +455,8 @@ function criarEvento() {
 function salvarEvento() {
   if (me_inputEventoTitulo.value) {
     inputEventoTitulo.classList.remove("error");
-    let dateSchedule = calendar.find((e) => e.date == diaClicado);
+    let dateEvent = calendar.find((e) => e.date == diaClicado).dateEvents.find((e) => e.title == eventoClicado.title);
+
 
     // ? eu pensei que oldEvent seria uma referencia para o eventoClicado, mas não é, e como se fosse uma copia, então não consigo alterar o eventoClicado com oldEvent = newEvent?
 
@@ -346,18 +465,33 @@ function salvarEvento() {
       description: me_inputEventoDescricao.value,
       start: me_inputEventoInicio.value,
       end: me_inputEventoFim.value,
+      date: diaClicado
     };
 
-
-    
     const dateEvents = calendar.find((e) => e.date === diaClicado).dateEvents;
 
-    //filter and push
-    calendar.find((e) => e.date === diaClicado).dateEvents = dateEvents.filter(
-      (e) => e !== eventoClicado
-    );
-    calendar.find((e) => e.date === diaClicado).dateEvents.push(newEvent);
-    localStorage.setItem("calendar", JSON.stringify(calendar));
+
+    $.post('/calendarTokenLab/server/proxy.php', {
+      action: 'update_event',
+      id: dateEvent.id,
+      event: newEvent
+    }).done(function(response){
+      console.log('something')
+      if(response){
+        console.log(response.success)
+      }else{
+        console.log("no response");
+      }
+    }).fail(function(jqXHR, textStatus, errorThrown){
+      console.error('Fetch Error:', errorThrown);
+    });
+
+    // filter and push
+    // calendar.find((e) => e.date === diaClicado).dateEvents = dateEvents.filter(
+    //   (e) => e !== eventoClicado
+    // );
+    // calendar.find((e) => e.date === diaClicado).dateEvents.push(newEvent);
+    // localStorage.setItem("calendar", JSON.stringify(calendar));
     fecharModal();
   }
 }
@@ -384,7 +518,24 @@ function deletarEvento() {
   calendar.find((e) => e.date === diaClicado).dateEvents = dateEvents.filter(
     (e) => e !== eventoClicado
   );
+  dateEvent = calendar.find((e) => e.date === diaClicado).dateEvents.find((e) => e.title == eventoClicado.title)
 
+  $.post('/calendarTokenLab/server/proxy.php',{
+    action: 'delete_event',
+  id: dateEvent.id
+  }).done(
+      function(response){
+        console.log('something')
+        if(response){
+          console.log(response.success)
+        }else{
+          console.log("no response");
+        }
+      }
+  ).fail(function (jqXHR, textStatus, errorThrown){
+    console.error('Fetch Error:', errorThrown);
+
+  })
   // buttonDeletar.removeEventListener("click", deletarEvento(eventTitle));
   localStorage.setItem("calendar", JSON.stringify(calendar));
   fecharModal();
@@ -574,6 +725,25 @@ function clicarButtons() {
   // redBlackScheme.addEventListener("click", () => applyRBScheme());
 }
 
-clicarButtons();
-load();
-fillColorPicker();
+$.post('/calendarTokenLab/server/proxy.php', {
+  action: 'fetch_id'
+}).done(function(data){
+  // If jQuery doesn't automatically parse the JSON response, uncomment the next line:
+  // data = JSON.parse(data);
+
+  if(data && data.user_id){ // Check if data is not null and user_id exists
+    console.log("User ID:", data.user_id);
+    console.log("hello sir");
+    user_id = data.user_id;
+    clicarButtons();
+    load();
+    fillColorPicker();
+  } else {
+    console.error('Invalid response:', data);
+  }
+}).fail(function(jqXHR, textStatus, errorThrown) {
+  console.error('Fetch Error:', errorThrown);
+});
+// clicarButtons();
+// load();
+// fillColorPicker();
